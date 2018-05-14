@@ -1,5 +1,21 @@
 export const navItems = [
   {
+    name: 'Track FS Position',
+    url: '/track-fs',
+    icon: 'icon-map'
+  },
+  {
+    name: 'News / Alert',
+    url: '/news/list',
+    icon: 'icon-bell'
+  },
+  {
+    name: 'Master Data',
+    url: '/data-master',
+    icon: 'icon-puzzle'
+  },
+
+  {
     name: 'Dashboard',
     url: '/dashboard',
     icon: 'icon-speedometer',

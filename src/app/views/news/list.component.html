@@ -1,0 +1,80 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-12">
+          <form>
+            <div class="form-group row">
+              <label class="col-sm-3 col-md-2 col-form-label">
+                Search
+              </label>
+              <div class="col-sm-9 col-md-4">
+                <input type="text" class="form-control" />
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-sm-3 col-md-2 col-form-label">
+                Periode
+              </label>
+              <div class="col-sm-9 col-md-4">
+                <input type="text" class="form-control" />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-sm btn-primary" type="submit">
+        <i class="fa fa-dot-circle-o"></i> Submit</button>
+      <button class="btn btn-sm btn-danger" type="reset">
+        <i class="fa fa-ban"></i> Clear</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <button class="btn btn-primary pull-right">
+        Add New Data
+      </button>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-12">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th class="text-center">Action</th>
+                <th>Title</th>
+                <th class="text-center">Start Date</th>
+                <th class="text-center">End Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of news">
+                <td class="text-center">
+                  <a href="#">
+                    <i class="fa fa-pencil"></i>
+                  </a>
+                  &nbsp;
+                  <a href="#">
+                    <i class="fa fa-trash"></i>
+                  </a>
+                </td>
+                <td>
+                  {{ item.title }}
+                </td>
+                <td class="text-center">
+                  {{ item.startDate }}
+                </td>
+                <td class="text-center">
+                  {{ item.endDate }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
