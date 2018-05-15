@@ -10,16 +10,37 @@ export class NewsListComponent implements OnInit {
 
   news: News[];
 
-  query: any;
+  currentPage: number = 1;
 
   constructor(
     private newsService: NewsService
-  ) {
-
-  }
+  ) { }
 
   ngOnInit() {
-    // this.news = this.newsService.getNews();
+    // this.newsService.getNews()
+    //   .subscribe(response => {
+    //     this.news = response.data;
+    //   });
+
+    this.news = [];
+
+    let x = new News();
+    x.id = 1;
+    x.title = 'test';
+
+    this.news.push(x);
+    this.news.push(x);
+    this.news.push(x);
+    this.news.push(x);
+    this.news.push(x);
   }
+
+  pageChanged(event: any) {
+    let nextPage = event.page;
+    let itemsPerPage = event.itemsPerPage;
+
+    
+  }
+  
 
 }

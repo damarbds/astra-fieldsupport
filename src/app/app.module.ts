@@ -57,6 +57,7 @@ import { NewsService } from "./services/news.service";
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ChartsModule,
+
     SharedModule,
     NewsModule,
     ReportModule

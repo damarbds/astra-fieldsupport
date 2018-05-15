@@ -15,7 +15,21 @@ const routes: Routes = [
     path: 'upsert',
     component: NewsUpsertComponent,
     data: {
-      title: 'Upsert'
+      title: 'Create News'
+    }
+  },
+  {
+    path: 'upsert/:id',
+    component: NewsUpsertComponent,
+    data: {
+      title: 'Update News'
+    }
+  },
+  {
+    path: 'detail/:id',
+    component: NewsUpsertComponent,
+    data: {
+      title: 'News Detail'
     }
   }
 ];
