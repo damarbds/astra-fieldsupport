@@ -37,8 +37,12 @@ import { AppRoutingModule } from "./app.routing";
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { TabsModule } from "ngx-bootstrap/tabs";
 import { ChartsModule } from "ng2-charts/ng2-charts";
+
+import { SharedModule } from "./views/shared/shared.module";
 import { NewsModule } from './views/news/news.module';
 import { ReportModule } from "./views/report/report.module";
+
+import { NewsService } from "./services/news.service";
 
 @NgModule({
   imports: [
@@ -53,6 +57,7 @@ import { ReportModule } from "./views/report/report.module";
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ChartsModule,
+    SharedModule,
     NewsModule,
     ReportModule
   ],
@@ -68,7 +73,8 @@ import { ReportModule } from "./views/report/report.module";
     {
       provide: LocationStrategy,
       useClass: HashLocationStrategy
-    }
+    },
+    NewsService
   ],
   bootstrap: [AppComponent]
 })

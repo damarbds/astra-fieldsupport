@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ListComponent } from './list.component';
-import { UpsertComponent } from './upsert.component';
+import { NewsUpsertComponent } from './news-upsert.component';
+import { NewsListComponent } from './news-list.component';
 
 const routes: Routes = [
   {
     path: 'list',
-    component: ListComponent,
+    component: NewsListComponent,
     data: {
       title: 'News'
     }
   },
   {
     path: 'upsert',
-    component: UpsertComponent,
+    component: NewsUpsertComponent,
     data: {
       title: 'Upsert'
     }
