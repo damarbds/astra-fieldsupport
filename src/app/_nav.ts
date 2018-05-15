@@ -5,6 +5,11 @@ export const navItems = [
     icon: 'icon-map'
   },
   {
+    name: "Report",
+    url: "/report",
+    icon: "icon-list"
+  },
+  {
     name: 'News / Alert',
     url: '/news/list',
     icon: 'icon-bell'
@@ -14,7 +19,6 @@ export const navItems = [
     url: '/data-master',
     icon: 'icon-puzzle'
   },
-
   {
     name: 'Dashboard',
     url: '/dashboard',
@@ -203,11 +207,6 @@ export const navItems = [
   {
     title: true,
     name: "Extras"
-  },
-  {
-    name: "Report",
-    url: "/report",
-    icon: "icon-star"
   },
   {
     name: "Pages",
