@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { News } from '../models/news';
-import { ApiResponse } from '../models/api-response';
+import { ApiResponse, ApiResponseQuery } from '../models/api-response';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +15,8 @@ export class NewsService {
   ) {
   }
 
-  getNews(): Observable<ApiResponse<News[]>> {
-    return this.http.post<ApiResponse<News[]>>(`${environment.apiUrl}/api/alert/list`, {});
+  getNews(): Observable<ApiResponseQuery<News>> {
+    return this.http.post<ApiResponseQuery<News>>(`${environment.apiUrl}/api/alert/list`, {});
   }
 
   getNewsById(id: number): Observable<ApiResponse<News>> {
