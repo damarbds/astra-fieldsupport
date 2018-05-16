@@ -10,8 +10,17 @@ import * as _ from 'lodash';
 })
 export class ReportComponent implements OnInit {
   data: any;
-  initialPage: number = 0;
+  reportChoice: number = 0;
+  option: any = {
+    ticketStatus: 0,
+    userFeedback: 1,
+  }
+  show: any = {
+    ticketStatus: false,
+    userFeedback: false,
+  }
   itemsOnPage: any = [];
+  initialPage: number = 0;
   itemsPerPage: number = 3;
   maxSize: number = 5;
   selectedTicketStatus: Array<number> = [];
@@ -123,5 +132,24 @@ export class ReportComponent implements OnInit {
 
   downloadExcel() {
     console.log(this.selectedTicketStatus);
+  }
+
+  hideAllReport() {
+    const props = Object.keys(this.show);
+    props.forEach(prop => {
+      this.show[prop] = false;
+    });
+  }
+
+  showReport(choice) {
+    this.hideAllReport();
+    switch (choice) {
+      case 0:
+        this.show.ticketStatus = true;
+        break;
+      case 1:
+        this.show.userFeedback = true;
+        break;
+    }
   }
 }
