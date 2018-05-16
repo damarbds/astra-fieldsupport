@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NewsUpsertComponent } from './news-upsert.component';
 import { NewsListComponent } from './news-list.component';
+import { NewsDetailComponent } from './news-detail.component';
 
 const routes: Routes = [
   {
@@ -27,7 +28,7 @@ const routes: Routes = [
   },
   {
     path: 'detail/:id',
-    component: NewsUpsertComponent,
+    component: NewsDetailComponent,
     data: {
       title: 'News Detail'
     }

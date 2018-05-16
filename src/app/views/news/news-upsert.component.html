@@ -3,51 +3,65 @@
     <div class="card">
       <div class="card-body">
         <div class="form-group row">
-          <label class="col-sm-3 col-md-2 col-form-label">
-            To
-          </label>
-          <div class="col-sm-9 col-md-10">
+          <label class="col-md-2 col-form-label">To</label>
+          <div class="col-md-2">
             <label>
               <input type="checkbox" name="checkSendToAll" [(ngModel)]="checkSendToAll" (click)="setSendToAllRecipients($event)" /> Send to All
             </label>
-            <input type="text" name="recipients" class="form-control" [(ngModel)]="news.recipients" [readonly]="checkSendToAll" />
+          </div>
+          <div class="col-md-8">
+            <ng-select [items]="listRecipients" bindLabel="alias" [loading]="recipientLoading" [typeahead]="" [multiple]="true"
+              (change)="recipientsOnChange($event)">
+              <ng-template ng-option-tmp let-item="item">
+                {{ item.alias }}
+                <br/>
+                <small>{{ item.type }}</small>
+              </ng-template>
+            </ng-select>
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-sm-3 col-md-2 col-form-label">
+          <label class="col-md-2 col-form-label">
             Title
           </label>
-          <div class="col-sm-9 col-md-10">
-            <input type="text" name="recipients" class="form-control" [(ngModel)]="news.recipients" [readonly]="checkSendToAll" />            
+          <div class="col-md-2">
+          </div>
+          <div class="col-md-8">
+            <input type="text" name="recipients" class="form-control" [(ngModel)]="news.title" />
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-sm-3 col-md-2 col-form-label">
+          <label class="col-md-2 col-form-label">
             Start Date
           </label>
-          <div class="col-sm-9 col-md-10">
+          <div class="col-md-2">
             <label>
               <input type="checkbox" name="checkStartDateToday" [(ngModel)]="checkStartDateToday" (click)="setStartDateToday($event)" /> Present
             </label>
-            <input type="text" name="startDate" class="form-control" [(ngModel)]="news.startDate" bsDatepicker [readonly]="checkStartDateToday" />
+          </div>
+          <div class="col-md-8">
+            <input type="text" name="startDate" class="form-control" [(ngModel)]="news.startDate" bsDatepicker [disabled]="checkStartDateToday"
+            />
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-sm-3 col-md-2 col-form-label">
+          <label class="col-md-2 col-form-label">
             End Date
           </label>
-          <div class="col-sm-9 col-md-10">
+          <div class="col-md-2">
             <label>
               <input type="checkbox" name="checkEndDateNever" [(ngModel)]="checkEndDateNever" (click)="clearEndDate($event)" /> Never
             </label>
-            <input type="text" name="endDate" class="form-control" [(ngModel)]="news.endDate" bsDatepicker [readonly]="checkEndDateNever" />
+          </div>
+          <div class="col-md-8">
+            <input type="text" name="endDate" class="form-control" [(ngModel)]="news.endDate" bsDatepicker [disabled]="checkEndDateNever" />
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-sm-3 col-md-2 col-form-label">
+          <label class="col-md-2 col-form-label">
             Body News
           </label>
-          <div class="col-sm-9 col-md-10">
+          <div class="col-md-10">
             <textarea name="content" cols="30" rows="10" class="form-control" [(ngModel)]="news.content"></textarea>
           </div>
         </div>
