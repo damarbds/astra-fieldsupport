@@ -15,6 +15,7 @@ export class ReportComponent implements OnInit {
     ticketStatus: 0,
     userFeedback: 1,
   }
+  period: Date[];
   show: any = {
     ticketStatus: false,
     userFeedback: false,
@@ -255,6 +256,7 @@ export class ReportComponent implements OnInit {
 
   showReport(choice) {
     this.hideAllReport();
+    console.log(this.period);
     const initialPage = this.getInitialPage();
     switch (choice) {
       case 0:
