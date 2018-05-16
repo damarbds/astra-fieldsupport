@@ -50,7 +50,7 @@
             <tbody>
               <tr *ngFor="let item of itemsOnPage">
                 <td class="text-center">
-                  <input type="checkbox" [(ngModel)]="item.action" (change)="addSelectedTicketStatus($event, item.id)">
+                  <input type="checkbox" [(ngModel)]="item.action" (change)="manageSelectedTicketStatus($event, item.id)">
                 </td>
                 <td class="text-center">
                   {{ item.SLA }}
@@ -89,12 +89,12 @@
             </tbody>
           </table>
           <pagination class="report-pagination pull-right" [totalItems]="data.ticketStatus.length" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize"
-            (pageChanged)="pageChanged($event)"></pagination>
+            (pageChanged)="ticketStatusPageChanged($event)"></pagination>
         </div>
       </div>
     </div>
     <div class="card-footer">
-      <button type="button" class="btn btn-success" (click)="downloadExcel()">Download as Excel</button>
+      <button type="button" class="btn btn-success" (click)="downloadTicketStatusExcel()">Download as Excel</button>
     </div>
   </div>
   <div *ngIf="show.userFeedback" class="card">
@@ -124,30 +124,53 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of news">
+              <tr *ngFor="let item of itemsOnPage">
                 <td class="text-center">
-                  <a href="#">
-                    <i class="fa fa-pencil"></i>
-                  </a>
-                  &nbsp;
-                  <a href="#">
-                    <i class="fa fa-trash"></i>
-                  </a>
-                </td>
-                <td>
-                  {{ item.title }}
+                  <input type="checkbox" [(ngModel)]="item.action" (change)="manageSelectedUserFeedback($event, item.id)">
                 </td>
                 <td class="text-center">
-                  {{ item.startDate }}
+                  {{ item.rating }}
                 </td>
                 <td class="text-center">
-                  {{ item.endDate }}
+                  {{ item.additionalFeedback }}
+                </td>
+                <td class="text-center">
+                  {{ item.comment }}
+                </td>
+                <td class="text-center">
+                  {{ item.ticketNo }}
+                </td>
+                <td class="text-center">
+                  {{ item.ticketCreatedDate }}
+                </td>
+                <td class="text-center">
+                  {{ item.requester }}
+                </td>
+                <td class="text-center">
+                  {{ item.group }}
+                </td>
+                <td class="text-center">
+                  {{ item.category }}
+                </td>
+                <td class="text-center">
+                  {{ item.subCategory }}
+                </td>
+                <td class="text-center">
+                  {{ item.description }}
+                </td>
+                <td class="text-center">
+                  {{ item.PICName }}
                 </td>
               </tr>
             </tbody>
           </table>
+          <pagination class="report-pagination pull-right" [totalItems]="data.ticketStatus.length" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize"
+            (pageChanged)="userFeedbackPageChanged($event)"></pagination>
         </div>
       </div>
+    </div>
+    <div class="card-footer">
+      <button type="button" class="btn btn-success" (click)="downloadUserFeedbackExcel()">Download as Excel</button>
     </div>
   </div>
 </div>

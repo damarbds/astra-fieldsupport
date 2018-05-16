@@ -19,11 +19,12 @@ export class ReportComponent implements OnInit {
     ticketStatus: false,
     userFeedback: false,
   }
-  itemsOnPage: any = [];
   initialPage: number = 0;
   itemsPerPage: number = 3;
   maxSize: number = 5;
+  itemsOnPage: any = [];
   selectedTicketStatus: Array<number> = [];
+  selectedUserFeedback: Array<number> = [];
 
   constructor() { }
 
@@ -103,35 +104,143 @@ export class ReportComponent implements OnInit {
           PICName: 'Leslie Aula',
           status: true
         }
+      ],
+      userFeedback: [
+        {
+          id: 1,
+          rating: 1,
+          additionalFeedback: 'Please improve the language',
+          comment: 'Too bad bro',
+          ticketNo: 10002,
+          ticketCreatedDate: createdDate.format('MM/DD/YY'),
+          requester: 'Steven Yang',
+          group: 'S001',
+          category: 'Software',
+          subCategory: '.NET',
+          description: '.NET got a lot of bugs',
+          PICName: 'Leslie Aula'
+        },
+        {
+          id: 11,
+          rating: 2,
+          additionalFeedback: 'What a bad language!',
+          comment: 'No comment sis',
+          ticketNo: 10006,
+          ticketCreatedDate: createdDate.format('MM/DD/YY'),
+          requester: 'Jacky Rusly',
+          group: 'S002',
+          category: 'Software',
+          subCategory: 'Java',
+          description: 'Java got a lot of bugs',
+          PICName: 'Leslie Aula',
+          status: true
+        },
+        {
+          id: 12,
+          rating: 5,
+          additionalFeedback: 'You guys are rock',
+          comment: 'No comment! Too good!',
+          ticketNo: 10002,
+          ticketCreatedDate: createdDate.format('MM/DD/YY'),
+          requester: 'Achmad Lucky',
+          group: 'S003',
+          category: 'Software',
+          subCategory: 'Javascript',
+          description: 'My issue is that I dont get any bugs',
+          PICName: 'Leslie Aula',
+          status: false
+        },
+        {
+          id: 13,
+          rating: 1,
+          additionalFeedback: 'The language sucks really hard',
+          comment: 'Worse!',
+          ticketNo: 10011,
+          ticketCreatedDate: createdDate.format('MM/DD/YY'),
+          requester: 'Steven Yang',
+          group: 'S001',
+          category: 'Software',
+          subCategory: '.NET',
+          description: '.NET got a lot of bugs',
+          PICName: 'Leslie Aula',
+          status: false
+        },
+        {
+          id: 14,
+          rating: 3,
+          additionalFeedback: 'Decent service, but not incredible',
+          comment: 'So so',
+          ticketNo: 10012,
+          ticketCreatedDate: createdDate.format('MM/DD/YY'),
+          requester: 'Jacky Rusly',
+          group: 'S002',
+          category: 'Software',
+          subCategory: 'Java',
+          description: 'Java got a lot of bugs',
+          PICName: 'Leslie Aula',
+          status: true
+        }
       ]
     }
-    const startItem = this.initialPage * this.itemsPerPage;
-    const endItem = (this.initialPage + 1) * this.itemsPerPage;
-    this.constructPage(startItem, endItem);
   }
 
-  pageChanged(e: PageChangedEvent): void {
-    const startItem = (e.page - 1) * e.itemsPerPage;
-    const endItem = e.page * e.itemsPerPage;
-    this.constructPage(startItem, endItem);
+  getInitialPage() {
+    const startIndex = this.initialPage * this.itemsPerPage;
+    const endIndex = (this.initialPage + 1) * this.itemsPerPage;
+    return {
+      startIndex,
+      endIndex
+    }
   }
 
-  constructPage(startIndex, endIndex) {
-    this.itemsOnPage = this.data.ticketStatus.slice(startIndex, endIndex);
+  getCurrentPage(e) {
+    const startIndex = (e.page - 1) * e.itemsPerPage;
+    const endIndex = e.page * e.itemsPerPage;
+    return {
+      startIndex,
+      endIndex
+    }
+  }
+
+  addActionToItems(selectedItemIds) {
     this.itemsOnPage.forEach(item => {
-      item.action = this.selectedTicketStatus.includes(item.id);
+      item.action = selectedItemIds.includes(item.id);
     })
   }
 
-  addSelectedTicketStatus(e, id): void {
-    if (e.target.checked && !this.selectedTicketStatus.includes(id))
-      this.selectedTicketStatus.push(id);
-    else if (!e.target.checked)
-      _.remove(this.selectedTicketStatus, item => (item === id));
+  ticketStatusPageChanged(e: PageChangedEvent) {
+    const currentPage = this.getCurrentPage(e);
+    this.itemsOnPage = this.data.ticketStatus.slice(currentPage.startIndex, currentPage.endIndex); // getTicketStatus by defined page
+    this.addActionToItems(this.selectedTicketStatus);
   }
 
-  downloadExcel() {
+  userFeedbackPageChanged(e: PageChangedEvent) {
+    const currentPage = this.getCurrentPage(e);
+    this.itemsOnPage = this.data.userFeedback.slice(currentPage.startIndex, currentPage.endIndex); // getUserFeedback by defined page
+    this.addActionToItems(this.selectedUserFeedback);
+  }
+
+  manageSelectedAction(items, e, id) {
+    if (e.target.checked && !items.includes(id))
+      items.push(id);
+    else if (!e.target.checked)
+      _.remove(items, item => (item === id));
+  }
+
+  manageSelectedTicketStatus(e, id): void {
+    this.manageSelectedAction(this.selectedTicketStatus, e, id);
+  }
+
+  manageSelectedUserFeedback(e, id): void {
+    this.manageSelectedAction(this.selectedUserFeedback, e, id);
+  }
+
+  downloadTicketStatusExcel() {
     console.log(this.selectedTicketStatus);
+  }
+
+  downloadUserFeedbackExcel() {
+    console.log(this.selectedUserFeedback);
   }
 
   hideAllReport() {
@@ -139,17 +248,24 @@ export class ReportComponent implements OnInit {
     props.forEach(prop => {
       this.show[prop] = false;
     });
+    this.itemsOnPage = [];
+    this.selectedTicketStatus = [];
+    this.selectedUserFeedback = [];
   }
 
   showReport(choice) {
     this.hideAllReport();
+    const initialPage = this.getInitialPage();
     switch (choice) {
       case 0:
         this.show.ticketStatus = true;
+        this.itemsOnPage = this.data.ticketStatus.slice(initialPage.startIndex, initialPage.endIndex); // getTicketStatus by first page
         break;
       case 1:
         this.show.userFeedback = true;
+        this.itemsOnPage = this.data.userFeedback.slice(initialPage.startIndex, initialPage.endIndex); // getUserFeedback by first page
         break;
     }
+    this.addActionToItems(this.itemsOnPage);
   }
 }
