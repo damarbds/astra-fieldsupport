@@ -12,6 +12,10 @@ export class NewsUpsertComponent implements OnInit {
   id: number;
   news: News;
 
+  checkSendToAll: boolean;
+  checkStartDateToday: boolean;
+  checkEndDateNever: boolean;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -21,6 +25,8 @@ export class NewsUpsertComponent implements OnInit {
 
   ngOnInit() {
     this.id = parseInt(this.route.snapshot.paramMap.get('id'));
+
+    this.news = new News();
 
     if (this.id > 0) {
       console.log(`Edit Mode`);
@@ -38,6 +44,24 @@ export class NewsUpsertComponent implements OnInit {
 
   back() {
     this.router.navigate(['/news/list']);
+  }
+
+  setSendToAllRecipients(event) {
+    if (event.target.checked) {
+      this.news.recipients = '';
+    }
+  }
+
+  setStartDateToday(event) {
+    if (event.target.checked) {
+      this.news.startDate = new Date();
+    }
+  }
+
+  clearEndDate(event) {
+    if (event.target.checked) {
+      this.news.endDate = null;
+    }
   }
 
 }
