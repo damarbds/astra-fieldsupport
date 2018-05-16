@@ -1,24 +1,153 @@
 <div class="animated fadeIn">
   <div class="card">
     <div class="card-body">
-      <div class="form-group row">
-        <label class="col-md-2 col-form-label" for="select1">Report</label>
-        <div class="col-md-4">
-          <select id="select1" name="select1" class="form-control">
-            <option value="0">Ticket Status</option>
-            <option value="1">User Feedback</option>
-          </select>
+      <form>
+        <div class="form-group row">
+          <label class="col-md-2 col-form-label" for="select1">Report</label>
+          <div class="col-md-4">
+            <select id="select1" name="select1" class="form-control">
+              <option value="0">Ticket Status</option>
+              <option value="1">User Feedback</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-2 col-form-label">Periode</label>
+          <div class="col-md-4">
+            <input type="text" placeholder="Awal - Akhir" class="form-control" bsDaterangepicker>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="card-footer">
+      <button type="button" class="btn btn-primary">Show</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <h3>
+        Ticket Status Report
+      </h3>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-12">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Action</th>
+                <th>SLA</th>
+                <th>Expected Time</th>
+                <th>Ticket No</th>
+                <th>Ticket Created Date</th>
+                <th>Requester</th>
+                <th>Group</th>
+                <th>Category</th>
+                <th>Sub Category</th>
+                <th>Description</th>
+                <th>PIC Name</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of itemsOnPage">
+                <td class="text-center">
+                  <input type="checkbox" [(ngModel)]="item.action" (change)="addSelectedTicketStatus($event, item.id)">
+                </td>
+                <td class="text-center">
+                  {{ item.SLA }}
+                </td>
+                <td class="text-center">
+                  {{ item.expectedTime }}
+                </td>
+                <td class="text-center">
+                  {{ item.ticketNo }}
+                </td>
+                <td class="text-center">
+                  {{ item.ticketCreatedDate }}
+                </td>
+                <td class="text-center">
+                  {{ item.requester }}
+                </td>
+                <td class="text-center">
+                  {{ item.group }}
+                </td>
+                <td class="text-center">
+                  {{ item.category }}
+                </td>
+                <td class="text-center">
+                  {{ item.subCategory }}
+                </td>
+                <td class="text-center">
+                  {{ item.description }}
+                </td>
+                <td class="text-center">
+                  {{ item.PICName }}
+                </td>
+                <td class="text-center">
+                  {{ item.status }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <pagination class="report-pagination pull-right" [totalItems]="data.ticketStatus.length" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize"
+            (pageChanged)="pageChanged($event)"></pagination>
         </div>
       </div>
-      <div class="form-group row">
-        <label class="col-md-2 col-form-label">Periode</label>
-        <div class="col-md-4">
-          <input type="text" placeholder="Awal - Akhir" class="form-control" bsDaterangepicker>
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-md-2">
-          <button type="button" class="btn btn-primary">Show</button>
+    </div>
+    <div class="card-footer">
+      <button type="button" class="btn btn-success" (click)="downloadExcel()">Download as Excel</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <h3>
+        User Feedback Report
+      </h3>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-12">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Action</th>
+                <th>Rating</th>
+                <th>Additional Feedback</th>
+                <th>Comment</th>
+                <th>Ticket No</th>
+                <th>Ticket Created Date</th>
+                <th>Requester</th>
+                <th>Group</th>
+                <th>Category</th>
+                <th>Sub Category</th>
+                <th>Description</th>
+                <th>PIC Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of news">
+                <td class="text-center">
+                  <a href="#">
+                    <i class="fa fa-pencil"></i>
+                  </a>
+                  &nbsp;
+                  <a href="#">
+                    <i class="fa fa-trash"></i>
+                  </a>
+                </td>
+                <td>
+                  {{ item.title }}
+                </td>
+                <td class="text-center">
+                  {{ item.startDate }}
+                </td>
+                <td class="text-center">
+                  {{ item.endDate }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
