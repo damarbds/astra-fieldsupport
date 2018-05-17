@@ -10,11 +10,6 @@ export const navItems = [
     icon: "icon-docs"
   },
   {
-    name: "Report",
-    url: "/report",
-    icon: "icon-list"
-  },
-  {
     name: 'News / Alert',
     url: '/news/list',
     icon: 'icon-envelope-letter'
