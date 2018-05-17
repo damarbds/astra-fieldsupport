@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   imports: [
@@ -11,14 +12,16 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     FormsModule,
     HttpClientModule,
     BsDatepickerModule.forRoot(),
-    PaginationModule.forRoot()
+    PaginationModule.forRoot(),
+    NgSelectModule
   ],
   declarations: [],
   exports: [
     CommonModule,
     FormsModule,
     BsDatepickerModule,
-    PaginationModule
+    PaginationModule,
+    NgSelectModule
   ]
 })
 export class SharedModule { }

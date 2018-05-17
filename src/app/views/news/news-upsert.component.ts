@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NewsService } from '../../services/news.service';
-import { News } from '../../models/news';
+import { News, NewsRecipients } from '../../models/news';
 
 @Component({
   selector: 'app-news-upsert',
@@ -11,6 +11,14 @@ export class NewsUpsertComponent implements OnInit {
 
   id: number;
   news: News;
+
+  // ini mesti diganti pake lazyloading ya nanti
+  listRecipients: NewsRecipients[] = [
+    { id: 1, alias: 'IT Department', type: 'GROUP' },
+    { id: 2, alias: 'HR Department', type: 'GROUP' },
+    { id: 3, alias: 'RND Department', type: 'GROUP' },
+    { id: 4, alias: 'Rahmat', type: 'INDIVIDUAL' },
+  ];
 
   checkSendToAll: boolean;
   checkStartDateToday: boolean;
@@ -48,7 +56,7 @@ export class NewsUpsertComponent implements OnInit {
 
   setSendToAllRecipients(event) {
     if (event.target.checked) {
-      this.news.recipients = '';
+      this.news.recipients = [];
     }
   }
 
@@ -62,6 +70,10 @@ export class NewsUpsertComponent implements OnInit {
     if (event.target.checked) {
       this.news.endDate = null;
     }
+  }
+
+  recipientsOnChange(event) {
+    this.news.recipients = event;
   }
 
 }
