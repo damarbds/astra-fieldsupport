@@ -21,7 +21,7 @@
       <button type="button" class="btn btn-primary" (click)="showReport(reportChoice)">Show</button>
     </div>
   </div>
-  <div *ngIf="show.ticketStatus" class="card">
+  <div *ngIf="show.ticketStatus" class="animated fadeIn card">
     <div class="card-header">
       <h3>
         Ticket Status Report
@@ -97,7 +97,7 @@
       <button type="button" class="btn btn-success" (click)="downloadTicketStatusExcel()">Download as Excel</button>
     </div>
   </div>
-  <div *ngIf="show.userFeedback" class="card">
+  <div *ngIf="show.userFeedback" class="animated fadeIn card">
     <div class="card-header">
       <h3>
         User Feedback Report
