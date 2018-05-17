@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { NewsRoutingModule } from './news-routing.module';
-import { ListComponent } from './list.component';
-import { UpsertComponent } from './upsert.component';
+import { NewsUpsertComponent } from './news-upsert.component';
+import { SharedModule } from '../shared/shared.module';
+import { NewsListComponent } from './news-list.component';
 
 @NgModule({
   imports: [
-    CommonModule,
-    NewsRoutingModule
+    SharedModule
+    , NewsRoutingModule
   ],
   declarations: [
-    ListComponent
-    , UpsertComponent
+    NewsListComponent
+    , NewsUpsertComponent
   ]
 })
 export class NewsModule { }
