@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NewsService } from '../../services/news.service';
 
-import { News, NewsRecipients } from '../../models/news';
+import { News, Recipient } from '../../models/news';
 
 @Component({
   selector: 'app-news-detail',

@@ -10,7 +10,7 @@
             </label>
           </div>
           <div class="col-md-8">
-            <ng-select [items]="listRecipients" bindLabel="alias" [loading]="recipientLoading" [typeahead]="" [multiple]="true"
+            <ng-select [items]="recipients" bindLabel="alias" [hideSelected]="true" [loading]="recipientLoading" [multiple]="true"
               (change)="recipientsOnChange($event)">
               <ng-template ng-option-tmp let-item="item">
                 {{ item.alias }}

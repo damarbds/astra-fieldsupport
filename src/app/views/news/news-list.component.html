@@ -19,7 +19,8 @@
                 Periode
               </label>
               <div class="col-sm-9 col-md-4">
-                <input type="text" class="form-control" name="daterange" [(ngModel)]="filter.daterange" bsDaterangepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-blue' }" />
+                <input type="text" class="form-control" name="daterange" [(ngModel)]="filter.daterange" bsDaterangepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-blue' }"
+                />
               </div>
             </div>
           </div>
@@ -59,18 +60,20 @@
                     <i class="fa fa-pencil"></i>
                   </a>
                   &nbsp;
-                  <a href="#" [routerLink]="['/news/detail', item.id]">
+                  <a href="#">
                     <i class="fa fa-trash"></i>
                   </a>
                 </td>
                 <td>
-                  {{ item.title }}
+                  <a href="#" [routerLink]="['/news/detail', item.id]">
+                    {{ item.title }}
+                  </a>
                 </td>
                 <td class="text-center">
-                  {{ item.startDate }}
+                  {{ item.startDate | date: 'dd-MMM-yyyy HH:mm' }}
                 </td>
                 <td class="text-center">
-                  {{ item.endDate }}
+                  {{ item.endDate | date: 'dd-MMM-yyyy HH:mm' }}
                 </td>
               </tr>
             </tbody>

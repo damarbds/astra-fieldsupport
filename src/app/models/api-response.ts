@@ -12,5 +12,6 @@ export class ApiResponseQuery<T> {
 
 export class QueryResult<T> {
     count: number;
-    items: T[];
+    // items: T[];
+    items: Array<T>;
 }

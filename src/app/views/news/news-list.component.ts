@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { News, NewsRecipients } from '../../models/news';
+import { News, Recipient } from '../../models/news';
 import { NewsService } from '../../services/news.service';
 
 @Component({
