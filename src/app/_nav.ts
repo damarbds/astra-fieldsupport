@@ -1,7 +1,7 @@
 export const navItems = [
   {
     name: 'Track FS Position',
-    url: '/track-fs',
+    url: '/track-fs-position',
     icon: 'icon-location-pin'
   },
   {

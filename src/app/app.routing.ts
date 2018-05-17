@@ -91,6 +91,10 @@ export const routes: Routes = [
       {
         path: "report",
         loadChildren: "./views/report/report.module#ReportModule"
+      },
+      {
+        path: "track-fs-position",
+        loadChildren: "./views/track-fs-position/track-fs-position.module#TrackFsPositionModule"
       }
     ]
   }

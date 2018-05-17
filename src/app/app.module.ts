@@ -42,8 +42,10 @@ import { ChartsModule } from "ng2-charts/ng2-charts";
 import { SharedModule } from "./views/shared/shared.module";
 import { NewsModule } from './views/news/news.module';
 import { ReportModule } from "./views/report/report.module";
+import { TrackFsPositionModule } from "./views/track-fs-position/track-fs-position.module";
 
 import { NewsService } from "./services/news.service";
+
 
 @NgModule({
   imports: [
@@ -62,7 +64,8 @@ import { NewsService } from "./services/news.service";
 
     SharedModule,
     NewsModule,
-    ReportModule
+    ReportModule,
+    TrackFsPositionModule
   ],
   declarations: [
     AppComponent,

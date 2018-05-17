@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     HttpClientModule,
     BsDatepickerModule.forRoot(),
     PaginationModule.forRoot(),
-    NgSelectModule
+    NgSelectModule,
+    AgmCoreModule.forRoot({ apiKey: 'AIzaSyBmqS47JjlRfN_UPZHtBVeQ1nh9iFVRGfU' })
   ],
   declarations: [],
   exports: [
@@ -21,7 +23,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     FormsModule,
     BsDatepickerModule,
     PaginationModule,
-    NgSelectModule
+    NgSelectModule,
+    AgmCoreModule
   ]
 })
 export class SharedModule { }
