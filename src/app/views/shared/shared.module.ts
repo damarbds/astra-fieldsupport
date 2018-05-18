@@ -6,6 +6,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AgmCoreModule } from '@agm/core';
+import { environment } from '../../../environments/environment';
 
 @NgModule({
   imports: [
@@ -15,7 +16,7 @@ import { AgmCoreModule } from '@agm/core';
     BsDatepickerModule.forRoot(),
     PaginationModule.forRoot(),
     NgSelectModule,
-    AgmCoreModule.forRoot({ apiKey: 'AIzaSyBmqS47JjlRfN_UPZHtBVeQ1nh9iFVRGfU' })
+    AgmCoreModule.forRoot({ apiKey: environment.googleApiKey })
   ],
   declarations: [],
   exports: [

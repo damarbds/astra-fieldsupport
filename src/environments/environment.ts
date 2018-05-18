@@ -6,5 +6,6 @@
 export const environment = {
   production: false,
 
-  apiUrl: `http://localhost:31010`
+  apiUrl: `http://localhost:31010`,
+  googleApiKey: 'AIzaSyBmqS47JjlRfN_UPZHtBVeQ1nh9iFVRGfU'
 };
