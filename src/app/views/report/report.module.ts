@@ -1,14 +1,10 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { FormsModule } from '@angular/forms';
-
+import { NgModule } from '@angular/core';
 import { ReportRoutingModule } from "./report-routing.module";
 import { ReportComponent } from "./report.component";
-import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
-import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, ReportRoutingModule, BsDatepickerModule.forRoot(), PaginationModule.forRoot()],
+  imports: [SharedModule, ReportRoutingModule],
   declarations: [ReportComponent]
 })
 export class ReportModule { }
