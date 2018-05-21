@@ -10,6 +10,11 @@ export class NewsListComponent implements OnInit {
 
   filter: any = { keyword: '', daterange: [] };
 
+  pageQuery: any = {
+    page: 1,
+
+  };
+
   currentPage: number = 1;
   totalPage: number;
 
@@ -44,10 +49,8 @@ export class NewsListComponent implements OnInit {
 
     this.newsService.getNews()
       .subscribe(response => {
-        let result = response.data;
-
-        this.totalPage = result.count;
-        this.news = result.items;
+        this.news = response.items;
+        this.totalPage = response.count;
       });
   }
 }

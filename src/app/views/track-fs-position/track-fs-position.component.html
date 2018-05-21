@@ -1,6 +1,10 @@
 <div style="position: relative;">
-  <agm-map [latitude]="currentLat" [longitude]="currentLng">
-    <agm-marker *ngFor="let fs of fieldSupports" [latitude]="fs.lat" [longitude]="fs.lng" (markerClick)="selectFieldSupport(fs)">
+  <agm-map [latitude]="currentLat" [longitude]="currentLng" [zoom]="8">
+    <agm-marker *ngFor="let fs of fieldSupports"
+      [latitude]="fs.lat"
+      [longitude]="fs.lng"
+      [iconUrl]="'assets/img/icon-bike.png'"
+      (markerClick)="selectFieldSupport(fs)">
     </agm-marker>
   </agm-map>
 
