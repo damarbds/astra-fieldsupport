@@ -1,17 +1,13 @@
 export class ApiResponse<T> {
-    succeed: boolean;
+    success: boolean;
     message: string;
     data: T;
 }
 
 export class ApiResponseQuery<T> {
-    succeed: boolean;
+    success: boolean;
     message: string;
-    data: QueryResult<T>;
-}
-
-export class QueryResult<T> {
-    count: number;
-    // items: T[];
     items: Array<T>;
+    nextPageLink: string;
+    count: number;
 }
