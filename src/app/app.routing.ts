@@ -91,6 +91,14 @@ export const routes: Routes = [
       {
         path: "report",
         loadChildren: "./views/report/report.module#ReportModule"
+      },
+      {
+        path: "data-master",
+        loadChildren: "./views/master-feedback/master-feedback.module#MasterFeedbackModule"
+      },
+      {
+        path: "master-alert",
+        loadChildren: "./views/master-alert/master-alert.module#MasterAlertModule"
       }
     ]
   }
