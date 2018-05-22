@@ -1,12 +1,10 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-
+import { NgModule } from '@angular/core';
 import { ReportRoutingModule } from "./report-routing.module";
 import { ReportComponent } from "./report.component";
-import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-  imports: [CommonModule, ReportRoutingModule, BsDatepickerModule.forRoot()],
+  imports: [SharedModule, ReportRoutingModule],
   declarations: [ReportComponent]
 })
-export class ReportModule {}
+export class ReportModule { }

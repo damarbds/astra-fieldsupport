@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { News } from '../../models/news';
+import { News, Recipient } from '../../models/news';
 import { NewsService } from '../../services/news.service';
 
 @Component({
@@ -8,18 +8,49 @@ import { NewsService } from '../../services/news.service';
 })
 export class NewsListComponent implements OnInit {
 
-  news: News[];
+  filter: any = { keyword: '', daterange: [] };
 
-  query: any;
+  pageQuery: any = {
+    page: 1,
+
+  };
+
+  currentPage: number = 1;
+  totalPage: number;
+
+  news: News[];
 
   constructor(
     private newsService: NewsService
-  ) {
-
-  }
+  ) { }
 
   ngOnInit() {
-    // this.news = this.newsService.getNews();
+    this.getNews(this.filter);
   }
 
+  pageChanged(event: any) {
+    let nextPage = event.page;
+    let itemsPerPage = event.itemsPerPage;
+  }
+
+  searchNews() {
+    // di sini set paging ke 1
+
+    this.getNews(this.filter);
+  }
+
+  getNews(filter: any) {
+    let keyword = filter.keyword;
+
+    if (filter.daterange.length > 0) {
+      let startDate = filter.daterange[0];
+      let endDate = filter.daterange[1];
+    }
+
+    this.newsService.getNews()
+      .subscribe(response => {
+        this.news = response.items;
+        this.totalPage = response.count;
+      });
+  }
 }

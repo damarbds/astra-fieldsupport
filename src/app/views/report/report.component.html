@@ -4,23 +4,179 @@
       <div class="form-group row">
         <label class="col-md-2 col-form-label" for="select1">Report</label>
         <div class="col-md-4">
-          <select id="select1" name="select1" class="form-control">
-            <option value="0">Ticket Status</option>
-            <option value="1">User Feedback</option>
+          <select [(ngModel)]="reportChoice" id="select1" name="select1" class="form-control">
+            <option [(ngValue)]="option.ticketStatus">Ticket Status</option>
+            <option [(ngValue)]="option.userFeedback">User Feedback</option>
           </select>
         </div>
       </div>
       <div class="form-group row">
         <label class="col-md-2 col-form-label">Periode</label>
         <div class="col-md-4">
-          <input type="text" placeholder="Awal - Akhir" class="form-control" bsDaterangepicker>
+          <input type="text" placeholder="Awal - Akhir" class="form-control" [(ngModel)]="period" bsDaterangepicker>
         </div>
       </div>
-      <div class="form-group row">
-        <div class="col-md-2">
-          <button type="button" class="btn btn-primary">Show</button>
+    </div>
+    <div class="card-footer">
+      <button type="button" class="btn btn-primary" (click)="showReport(reportChoice)">Show</button>
+    </div>
+  </div>
+  <div *ngIf="show.ticketStatus" class="animated fadeIn card">
+    <div class="card-header">
+      <h3>
+        Ticket Status Report
+      </h3>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-12">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>
+                  <input id="selectAllTicketStatusCB" type="checkbox" [indeterminate]="allIndeterminate" [(ngModel)]="allChecked" (change)="selectAllAction($event)">
+                  <label style="margin-bottom: 0px;" for="selectAllTicketStatusCB">&emsp;Action</label>
+                </th>
+                <th>SLA</th>
+                <th>Expected Time</th>
+                <th>Ticket No</th>
+                <th>Ticket Created Date</th>
+                <th>Requester</th>
+                <th>Group</th>
+                <th>Category</th>
+                <th>Sub Category</th>
+                <th>Description</th>
+                <th>PIC Name</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of itemsOnPage">
+                <td class="text-center">
+                  <input type="checkbox" [(ngModel)]="item.action" (change)="manageSelectedItems($event, item.id)">
+                </td>
+                <td class="text-center">
+                  {{ item.SLA }}
+                </td>
+                <td class="text-center">
+                  {{ item.expectedTime }}
+                </td>
+                <td class="text-center">
+                  {{ item.ticketNo }}
+                </td>
+                <td class="text-center">
+                  {{ item.ticketCreatedDate }}
+                </td>
+                <td class="text-center">
+                  {{ item.requester }}
+                </td>
+                <td class="text-center">
+                  {{ item.group }}
+                </td>
+                <td class="text-center">
+                  {{ item.category }}
+                </td>
+                <td class="text-center">
+                  {{ item.subCategory }}
+                </td>
+                <td class="text-center">
+                  {{ item.description }}
+                </td>
+                <td class="text-center">
+                  {{ item.PICName }}
+                </td>
+                <td class="text-center">
+                  {{ item.status }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <pagination class="report-pagination pull-right" [totalItems]="data.count" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize"
+            (pageChanged)="pageChanged($event)"></pagination>
         </div>
       </div>
+    </div>
+    <div class="card-footer">
+      <button type="button" class="btn btn-success" (click)="downloadExcel()">Download as Excel</button>
+    </div>
+  </div>
+  <div *ngIf="show.userFeedback" class="animated fadeIn card">
+    <div class="card-header">
+      <h3>
+        User Feedback Report
+      </h3>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-12">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>
+                  <input id="selectAllUserFeedbackCB" type="checkbox" [indeterminate]="allIndeterminate" [(ngModel)]="allChecked" (change)="selectAllAction($event)">
+                  <label style="margin-bottom: 0px;" for="selectAllUserFeedbackCB">&emsp;Action</label>
+                </th>
+                <th>Rating</th>
+                <th>Additional Feedback</th>
+                <th>Comment</th>
+                <th>Ticket No</th>
+                <th>Ticket Created Date</th>
+                <th>Requester</th>
+                <th>Group</th>
+                <th>Category</th>
+                <th>Sub Category</th>
+                <th>Description</th>
+                <th>PIC Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of itemsOnPage">
+                <td class="text-center">
+                  <input type="checkbox" [(ngModel)]="item.action" (change)="manageSelectedItems($event, item.id)">
+                </td>
+                <td class="text-center">
+                  {{ item.rating }}
+                </td>
+                <td class="text-center">
+                  {{ item.additionalFeedback }}
+                </td>
+                <td class="text-center">
+                  {{ item.comment }}
+                </td>
+                <td class="text-center">
+                  {{ item.ticketNo }}
+                </td>
+                <td class="text-center">
+                  {{ item.ticketCreatedDate }}
+                </td>
+                <td class="text-center">
+                  {{ item.requester }}
+                </td>
+                <td class="text-center">
+                  {{ item.group }}
+                </td>
+                <td class="text-center">
+                  {{ item.category }}
+                </td>
+                <td class="text-center">
+                  {{ item.subCategory }}
+                </td>
+                <td class="text-center">
+                  {{ item.description }}
+                </td>
+                <td class="text-center">
+                  {{ item.PICName }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <pagination class="report-pagination pull-right" [totalItems]="data.count" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize"
+            (pageChanged)="pageChanged($event)"></pagination>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button type="button" class="btn btn-success" (click)="downloadExcel()">Download as Excel</button>
     </div>
   </div>
 </div>

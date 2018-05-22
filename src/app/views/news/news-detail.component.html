@@ -1,0 +1,40 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-body">
+      <div class="form-group row">
+        <div class="col-md-2 col-form-label">To</div>
+        <div class="col md-10">
+          <input type="text" disabled class="form-control" [(ngModel)]="news.displayedRecipients" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-2 col-form-label">Title</div>
+        <div class="col md-10">
+          <input type="text" disabled class="form-control" [(ngModel)]="news.title" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-2 col-form-label">Start Date</div>
+        <div class="col md-10">
+          <input type="text" disabled class="form-control" [(ngModel)]="news.startDate" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-2 col-form-label">End Date</div>
+        <div class="col md-10">
+          <input type="text" disabled class="form-control" [(ngModel)]="news.endDate" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-2 col-form-label">Body News</div>
+        <div class="col md-10">
+          <textarea disabled class="form-control" [(ngModel)]="news.content"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-sm btn-danger" type="button" (click)="back()">
+        <i class="fa fa-times"></i> Cancel</button>
+    </div>
+  </div>
+</div>

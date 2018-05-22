@@ -99,6 +99,10 @@ export const routes: Routes = [
       {
         path: "master-alert",
         loadChildren: "./views/master-alert/master-alert.module#MasterAlertModule"
+      },
+      {
+        path: "track-fs-position",
+        loadChildren: "./views/track-fs-position/track-fs-position.module#TrackFsPositionModule"
       }
     ]
   }
