@@ -37,13 +37,12 @@ export class ReportComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    let now = moment();
     let createdDate = moment().subtract(3, 'hours');
     let expectedTime = moment().add(2, 'hours');
     this.dummyTicketStatus = [
       {
         id: 1,
-        SLA: expectedTime.from(now),
+        SLA: '2h:42m',
         expectedTime: expectedTime.format('hh:mm a'),
         ticketNo: 101,
         ticketCreatedDate: createdDate.format('MM/DD/YY'),
@@ -57,7 +56,7 @@ export class ReportComponent implements OnInit {
       },
       {
         id: 2,
-        SLA: expectedTime.from(now),
+        SLA: '2h:42m',
         expectedTime: expectedTime.format('hh:mm a'),
         ticketNo: 221,
         ticketCreatedDate: createdDate.format('MM/DD/YY'),
@@ -71,7 +70,7 @@ export class ReportComponent implements OnInit {
       },
       {
         id: 3,
-        SLA: expectedTime.from(now),
+        SLA: '2h:42m',
         expectedTime: expectedTime.format('hh:mm a'),
         ticketNo: 313,
         ticketCreatedDate: createdDate.format('MM/DD/YY'),
@@ -85,7 +84,7 @@ export class ReportComponent implements OnInit {
       },
       {
         id: 4,
-        SLA: expectedTime.from(now),
+        SLA: '2h:42m',
         expectedTime: expectedTime.format('hh:mm a'),
         ticketNo: 401,
         ticketCreatedDate: createdDate.format('MM/DD/YY'),
@@ -99,7 +98,7 @@ export class ReportComponent implements OnInit {
       },
       {
         id: 5,
-        SLA: expectedTime.from(now),
+        SLA: '2h:42m',
         expectedTime: expectedTime.format('hh:mm a'),
         ticketNo: 521,
         ticketCreatedDate: createdDate.format('MM/DD/YY'),
@@ -123,8 +122,8 @@ export class ReportComponent implements OnInit {
         requester: 'Steven Yang',
         group: 'S001',
         category: 'Software',
-        subCategory: '.NET',
-        description: '.NET got a lot of bugs',
+        subCategory: 'Pascal',
+        description: 'Pascal got a lot of bugs',
         PICName: 'Leslie Aula'
       },
       {
@@ -167,8 +166,8 @@ export class ReportComponent implements OnInit {
         requester: 'Steven Yang',
         group: 'S001',
         category: 'Software',
-        subCategory: '.NET',
-        description: '.NET got a lot of bugs',
+        subCategory: 'Pascal',
+        description: 'Pascal got a lot of bugs',
         PICName: 'Leslie Aula',
         status: false
       },
