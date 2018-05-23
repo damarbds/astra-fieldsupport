@@ -1,56 +1,76 @@
 import { Component, OnInit } from '@angular/core';
-import { News, Recipient } from '../../models/news';
+import { News, Recipient, PageQuery } from '../../models';
 import { NewsService } from '../../services/news.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-news-list',
   templateUrl: './news-list.component.html'
 })
 export class NewsListComponent implements OnInit {
+  // for filter purpose
+  keyword: string;
+  dateRange: any[] = [];
 
-  filter: any = { keyword: '', daterange: [] };
+  newsList: News[];
+  pageQuery: PageQuery = new PageQuery();
 
-  pageQuery: any = {
-    page: 1,
-
-  };
-
-  currentPage: number = 1;
-  totalPage: number;
-
-  news: News[];
+  selectedDateRange: any[] = [];
 
   constructor(
-    private newsService: NewsService
+    private newsService: NewsService,
+    private toastrService: ToastrService
   ) { }
 
   ngOnInit() {
-    this.getNews(this.filter);
+    this.getNews(this.pageQuery);
   }
 
   pageChanged(event: any) {
-    let nextPage = event.page;
-    let itemsPerPage = event.itemsPerPage;
-  }
+    let startDate: Date;
+    let endDate: Date;
 
-  searchNews() {
-    // di sini set paging ke 1
-
-    this.getNews(this.filter);
-  }
-
-  getNews(filter: any) {
-    let keyword = filter.keyword;
-
-    if (filter.daterange.length > 0) {
-      let startDate = filter.daterange[0];
-      let endDate = filter.daterange[1];
+    if (this.selectedDateRange.length > 0) {
+      startDate = this.selectedDateRange[0];
+      endDate = this.selectedDateRange[1];
     }
 
-    this.newsService.getNews()
+    this.getNews(this.pageQuery, this.selectedDateRange);
+  }
+
+  searchNews(keyword: string, dateRange) {
+    this.pageQuery.page = 1;
+    this.pageQuery.keyword = keyword;
+
+    this.selectedDateRange = dateRange;
+
+    this.getNews(this.pageQuery, this.selectedDateRange);
+  }
+  
+  getNews(pageQuery: PageQuery, dateRange?) {
+    let startDate: Date;
+    let endDate: Date;
+
+    if (dateRange && dateRange.length > 0) {
+      startDate = dateRange[0];
+      endDate = dateRange[1];
+    }
+
+    this.newsService.getNews(pageQuery, startDate, endDate)
       .subscribe(response => {
-        this.news = response.items;
-        this.totalPage = response.count;
+        this.newsList = response.items;
+        this.pageQuery.count = response.count;
       });
+  }
+
+  confirmDelete(item) {
+    if (confirm(`Are you sure want to delete this data?`)) {
+      this.newsService.deleteNews(item.id)
+        .subscribe(response => {
+          this.toastrService.success(`Data has been deleted`);
+
+          this.getNews(this.pageQuery, this.selectedDateRange);
+        })
+    }
   }
 }

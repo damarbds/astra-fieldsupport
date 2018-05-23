@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NewsService } from '../../services/news.service';
 import { News, Recipient } from '../../models';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-news-upsert',
@@ -29,6 +30,7 @@ export class NewsUpsertComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private toastrService: ToastrService,
     private newsService: NewsService
   ) {
   }
@@ -78,6 +80,25 @@ export class NewsUpsertComponent implements OnInit {
 
   recipientsOnChange(event) {
     this.news.recipients = event;
+  }
+
+  save(news) {
+    if (news.id) {
+      this.newsService.updateNews(news.id, news)
+        .subscribe(response => {
+          this.toastrService.success(`Data has been updated`);
+          this.router.navigate(['/news/list']);
+
+        });
+    }
+    else {
+      this.newsService.createNews(news)
+        .subscribe(response => {
+          this.toastrService.success(`Data has been created`);
+          this.router.navigate(['/news/list']);
+
+        });
+    }
   }
 
   // getRecipients() {

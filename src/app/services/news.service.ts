@@ -4,12 +4,13 @@ import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import {
   News, Recipient,
-  ApiResponse, ApiResponseQuery
+  ApiResponse, ApiResponseQuery, PageQuery
 } from '../models';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class NewsService {
 
   constructor(
@@ -17,20 +18,16 @@ export class NewsService {
   ) {
   }
 
-  getNews(): Observable<ApiResponseQuery<News>> {
-    return this.http.post<ApiResponseQuery<News>>(`${environment.apiUrl}/api/alert/list`, {});
+  getNews(pageQuery: PageQuery, startDate: Date, endDate: Date): Observable<ApiResponseQuery<News>> {
+    let queryString: string[] = new Array;
+    // top
+    queryString.push(`$top=${pageQuery.size}`);
+    // skip
+    queryString.push(`$skip=${(pageQuery.page - 1) * pageQuery.size}`);
+    // orderby
+    // queryString.push(`$orderby=${pageQuery.orderBy} ${pageQuery.sort}`);
 
-    // let result: ApiResponseQuery<News> = new ApiResponseQuery<News>();
-    // result.succeed = true;
-    // result.message = '';
-    // result.data = new QueryResult<News>();
-    // result.data.count = 5;
-    // result.data.items = new Array<News>();
-    // result.data.items.push({ id: 1, title: 'Lorem ipsum', startDate: new Date(), endDate: new Date(), content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', recipients: [], displayedRecipients: '' });
-    // result.data.items.push({ id: 2, title: 'ut aliquit', startDate: new Date(), endDate: new Date(), content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', recipients: [], displayedRecipients: '' });
-    // result.data.items.push({ id: 3, title: 'inciduant', startDate: new Date(), endDate: new Date(), content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', recipients: [], displayedRecipients: '' });
-
-    // return of(result);
+    return this.http.post<ApiResponseQuery<News>>(`${environment.apiUrl}/api/alert/list?${queryString.join('&')}`, {});
   }
 
   getNewsById(id: number): Observable<ApiResponse<News>> {

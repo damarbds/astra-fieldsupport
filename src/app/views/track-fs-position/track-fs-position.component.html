@@ -1,16 +1,15 @@
 <div style="position: relative;">
-  <agm-map [latitude]="currentLat" [longitude]="currentLng" [zoom]="8">
-    <agm-marker *ngFor="let fs of fieldSupports"
-      [latitude]="fs.lat"
-      [longitude]="fs.lng"
-      [iconUrl]="'assets/img/icon-bike.png'"
-      (markerClick)="selectFieldSupport(fs)">
-    </agm-marker>
+  <agm-map [latitude]="currentLat" [longitude]="currentLng" [zoom]="5">
+    <agm-marker-cluster [imagePath]="'https://googlemaps.github.io/js-marker-clusterer/images/m'">
+      <agm-marker *ngFor="let fs of fieldSupports" [latitude]="fs.lat" [longitude]="fs.lng" [iconUrl]="'assets/img/icon-bike.png'"
+        (markerClick)="selectFieldSupport(fs)">
+      </agm-marker>
+    </agm-marker-cluster>
   </agm-map>
 
   <div class="card floating-box">
     <div class="card-body">
-      <input type="text" #keyword class="form-control" (change)="searchFieldSupports(keyword)"/>
+      <input type="text" #keyword class="form-control" (change)="searchFieldSupports(keyword)" />
 
       <pre>{{selectedFieldSupport|json}}</pre>
     </div>
@@ -21,13 +20,11 @@
   .floating-box {
     position: absolute;
     width: 320px;
-    /* height: 240px; */
     z-index: 1;
     BACKGROUND: #fff;
     display: block;
     top: 1rem;
     left: 1rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-
   }
 </style>

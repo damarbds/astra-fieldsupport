@@ -6,6 +6,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AgmCoreModule } from '@agm/core';
+import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 import { environment } from '../../../environments/environment';
 
 @NgModule({
@@ -16,16 +17,20 @@ import { environment } from '../../../environments/environment';
     BsDatepickerModule.forRoot(),
     PaginationModule.forRoot(),
     NgSelectModule,
-    AgmCoreModule.forRoot({ apiKey: environment.googleApiKey })
+    AgmCoreModule.forRoot({ apiKey: environment.googleApiKey }),
+    AgmJsMarkerClustererModule,
   ],
   declarations: [],
+  providers: [
+  ],
   exports: [
     CommonModule,
     FormsModule,
     BsDatepickerModule,
     PaginationModule,
     NgSelectModule,
-    AgmCoreModule
+    AgmCoreModule,
+    AgmJsMarkerClustererModule,
   ]
 })
 export class SharedModule { }
