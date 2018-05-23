@@ -93,6 +93,14 @@ export const routes: Routes = [
         loadChildren: "./views/report/report.module#ReportModule"
       },
       {
+        path: "data-master",
+        loadChildren: "./views/master-feedback/master-feedback.module#MasterFeedbackModule"
+      },
+      {
+        path: "master-alert",
+        loadChildren: "./views/master-alert/master-alert.module#MasterAlertModule"
+      },
+      {
         path: "track-fs-position",
         loadChildren: "./views/track-fs-position/track-fs-position.module#TrackFsPositionModule"
       }

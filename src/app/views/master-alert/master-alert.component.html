@@ -1,0 +1,45 @@
+<div class="card">
+  <div class="card-body">
+    <div class="col-6">
+      
+      <div class="row">
+          <div class="col-4">
+              <label>Alert Group Name</label>
+            </div>
+            <div class="col-8">
+              <input class="form-control" type="text" placeholder="Test" id="">
+            </div>
+      </div>
+      <div class="row" style="margin-left: 1px;margin-top: 8px;margin-bottom: 5px;">
+        <button class="btn btn-sm btn-primary" >search</button>
+        <button class="btn btn-sm btn-primary" (click)="create()">clear</button>
+      </div>
+      <div class="row" style="margin-left: 1px;margin-top: 8px;margin-bottom: 5px">
+        <button class="btn btn-sm btn-primary" (click)="create()">Add New Data</button>
+      </div>
+    </div>
+    <table class="table">
+        <thead>
+          <tr>
+            <th style="max-width: 50px;">Action</th>
+            <th>Alert Group Name</th>
+            <th>Count of User</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of data">
+            <td style="max-width: 50px;">
+              <button class="icon-doc btn-success" (click)="create()"></button>
+              <button class="icon-puzzle btn-primary" (click)="create()"></button>
+              <button class="icon-location-pin btn-danger" (click)="delete()"></button>
+            </td>
+            <td>{{item.alert}}</td>
+            <td>{{item.count}}</td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+  <div class="body">
+      
+  </div>
+</div>

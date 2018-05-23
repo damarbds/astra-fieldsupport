@@ -1,0 +1,47 @@
+<div class="card">
+  <div class="card-body col-6">
+    <div class="row">
+      <div class="col-2">
+        <label>Alert Group Name</label>
+      </div>
+      <div class="col-10">
+        <input class="form-control" type="text" placeholder="Test" id="">
+      </div>
+    </div>
+    <div>
+      <button type="button" class="btn btn-square btn-primary">Add New User</button>
+    </div>
+    
+    
+  </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Action</th>
+          <th>Name</th>
+          <th>UserID</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <button class="icon-trash btn-danger" (click)="create()">
+              
+            </button>
+          </td>
+          <td>item.name</td>
+          <td>item.userID</td>
+          <td>item.email</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="card-body">
+      <div>
+        <button class="btn btn-success" (click)="onCancel()">save</button>
+        <button class="btn btn-danger" (click)="onCancel()">cancel</button>
+      </div>
+    </div>
+    
+</div>
