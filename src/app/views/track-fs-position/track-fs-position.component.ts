@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { FieldSupport, PageQuery } from '../../models';
 import { ProfileService } from '../../services';
+import { } from 'googlemaps';
+import { MapsAPILoader } from '@agm/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-track-fs-position',
@@ -10,16 +13,24 @@ import { ProfileService } from '../../services';
 export class TrackFsPositionComponent implements OnInit {
 
   zoom: number = 5;
-  selectedFieldSupport: any;
   currentLat: number;
   currentLng: number;
 
-  filteredFieldSupports: Array<FieldSupport>;
+  destinationLat: number;
+  destinationLng: number;
 
+  selectedFieldSupport: FieldSupport;
   fieldSupports: Array<FieldSupport>;
+  filteredFieldSupports: Array<FieldSupport> = [];
   pageQuery: PageQuery = new PageQuery();
 
+  // public searchControl: FormControl;
+  @ViewChild("search")
+  public searchElementRef: ElementRef;
+
   constructor(
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone,
     private profileService: ProfileService
   ) { }
 
@@ -29,13 +40,40 @@ export class TrackFsPositionComponent implements OnInit {
     //   this.currentLng = position.coords.longitude;
     // });
 
+    // center of Indonesia
     this.currentLat = -2.4151583;
     this.currentLng = 108.8264017;
 
     this.getFieldSupports(this.pageQuery);
+
+    this.mapsAPILoader.load().then(() => {
+      let autocomplete = new google.maps.places.Autocomplete(
+        this.searchElementRef.nativeElement, {
+          types: []
+        });
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          //get the place result
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+          //verify result
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+          }
+          this.destinationLat = place.geometry.location.lat();
+          this.destinationLng = place.geometry.location.lng();
+
+          // this.currentLat = (this.selectedFieldSupport.lat + this.destinationLat) / 2;
+          // this.currentLng = (this.selectedFieldSupport.lng + this.destinationLng) / 2;
+        });
+      });
+    });
   }
 
   getFieldSupports(pageQuery: PageQuery) {
+    if (pageQuery.keyword == '') {
+      this.fieldSupports = [];
+    }
+
     this.profileService.getFieldSupports(pageQuery)
       .subscribe(response => {
         // nanti buka ini ya
@@ -64,9 +102,9 @@ export class TrackFsPositionComponent implements OnInit {
           },
           {
             id: 3,
-            name: 'Jimmy Hidayat',
-            username: 'jimmyhidayat',
-            email: 'jimmy.hidayat@ai.astra.co.id',
+            name: 'Dhifa Irawan',
+            username: 'dhifairawan',
+            email: 'dhifa@ai.astra.co.id',
             phone: '081802866694',
 
             lat: -6.25,
@@ -76,15 +114,17 @@ export class TrackFsPositionComponent implements OnInit {
       });
   }
 
-  selectFieldSupport(fieldSupport: any) {
+  selectFieldSupport(fieldSupport: FieldSupport) {
     this.selectedFieldSupport = fieldSupport;
 
-    // this.zoom = 10;
+    this.zoom = 12;
 
-    // this.currentLat = fieldSupport.lat;
-    // this.currentLng = fieldSupport.lng;
+    this.currentLat = fieldSupport.lat;
+    this.currentLng = fieldSupport.lng;
+  }
 
-
+  removeSelectedFieldSupport() {
+    delete this.selectedFieldSupport;
   }
 
   searchFieldSupports(keyword: string) {

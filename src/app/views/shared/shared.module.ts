@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -17,8 +17,12 @@ import { environment } from '../../../environments/environment';
     BsDatepickerModule.forRoot(),
     PaginationModule.forRoot(),
     NgSelectModule,
-    AgmCoreModule.forRoot({ apiKey: environment.googleApiKey }),
     AgmJsMarkerClustererModule,
+    AgmCoreModule.forRoot({
+      apiKey: environment.googleApiKey,
+      libraries: ['places']
+    }),
+    ReactiveFormsModule
   ],
   declarations: [],
   providers: [
@@ -31,6 +35,7 @@ import { environment } from '../../../environments/environment';
     NgSelectModule,
     AgmCoreModule,
     AgmJsMarkerClustererModule,
+    ReactiveFormsModule
   ]
 })
 export class SharedModule { }
