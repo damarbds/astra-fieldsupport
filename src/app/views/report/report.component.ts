@@ -11,13 +11,14 @@ import { ApiResponseQuery, TicketStatusReport, PageQuery } from "../../models";
   styleUrls: ["./report.component.scss"]
 })
 export class ReportComponent implements OnInit {
-  data: any;
+  reportList: any[] = [];
+  period: Date[];
+
   reportChoice: number = 0;
   option: any = {
     ticketStatus: 0,
     userFeedback: 1
   };
-  period: Date[];
   periodHasError: boolean = false;
   show: any = {
     ticketStatus: false,
@@ -26,174 +27,16 @@ export class ReportComponent implements OnInit {
 
   pageQuery: PageQuery = new PageQuery();
   maxSize: number = 5;
-  itemsOnPage: any = [];
 
   isAll: boolean = false;
   allChecked: boolean = false;
   allIndeterminate: boolean = false;
   selectedIds: Array<number> = [];
   unselectedIds: Array<number> = [];
-  dummyUserFeedback: any = [];
-  dummyTicketStatus: any = [];
 
   constructor(private reportService: ReportService) {}
 
-  ngOnInit() {
-    let createdDate = moment().subtract(3, "hours");
-    let expectedTime = moment().add(2, "hours");
-    this.dummyTicketStatus = [
-      {
-        id: 1,
-        SLA: "2h:42m",
-        expectedTime: expectedTime.format("hh:mm a"),
-        ticketNo: 101,
-        ticketCreatedDate: createdDate.format("MM/DD/YY"),
-        requester: "Steven Yang",
-        group: "S001",
-        category: "Software",
-        subCategory: ".NET",
-        description:
-          ".NET got a lot of bugs asdfasfa jashdfkjl kjasdhfkjasd kajdshfkhasdif kjasdhfkahsdfkj kas dfkhasfkjas dfkahs fhjaksdfkhas dsdfa adkjsfl asdfldjas fladjsfkljasdfkl asdfljasdf dkasf kldkjasfkl jasdf klasdjfkljaskdfjkl asdlf kljasfkljdlsjfkl daskjf jasdlijfklasdhjfl asd fkjasdfjhdkjashfasdjk fsdkjfhkjasdhfkj",
-        PICName: "Leslie Aula",
-        status: false
-      },
-      {
-        id: 2,
-        SLA: "2h:42m",
-        expectedTime: expectedTime.format("hh:mm a"),
-        ticketNo: 221,
-        ticketCreatedDate: createdDate.format("MM/DD/YY"),
-        requester: "Jacky Rusly",
-        group: "S002",
-        category: "Software",
-        subCategory: "Java",
-        description: "Java got a lot of bugs",
-        PICName: "Leslie Aula",
-        status: true
-      },
-      {
-        id: 3,
-        SLA: "2h:42m",
-        expectedTime: expectedTime.format("hh:mm a"),
-        ticketNo: 313,
-        ticketCreatedDate: createdDate.format("MM/DD/YY"),
-        requester: "Achmad Lucky",
-        group: "S003",
-        category: "Software",
-        subCategory: "Javascript",
-        description: "My issue is that I dont get any bugs",
-        PICName: "Leslie Aula",
-        status: false
-      },
-      {
-        id: 4,
-        SLA: "2h:42m",
-        expectedTime: expectedTime.format("hh:mm a"),
-        ticketNo: 401,
-        ticketCreatedDate: createdDate.format("MM/DD/YY"),
-        requester: "Steven Yang",
-        group: "S001",
-        category: "Software",
-        subCategory: ".NET",
-        description: ".NET got a lot of bugs",
-        PICName: "Leslie Aula",
-        status: false
-      },
-      {
-        id: 5,
-        SLA: "2h:42m",
-        expectedTime: expectedTime.format("hh:mm a"),
-        ticketNo: 521,
-        ticketCreatedDate: createdDate.format("MM/DD/YY"),
-        requester: "Jacky Rusly",
-        group: "S002",
-        category: "Software",
-        subCategory: "Java",
-        description: "Java got a lot of bugs",
-        PICName: "Leslie Aula",
-        status: true
-      }
-    ];
-    this.dummyUserFeedback = [
-      {
-        id: 1,
-        rating: 1,
-        additionalFeedback: "Please improve the language",
-        comment: "Too bad bro",
-        ticketNo: 10002,
-        ticketCreatedDate: createdDate.format("MM/DD/YY"),
-        requester: "Steven Yang",
-        group: "S001",
-        category: "Software",
-        subCategory: "Pascal",
-        description: "Pascal got a lot of bugs",
-        PICName: "Leslie Aula"
-      },
-      {
-        id: 11,
-        rating: 2,
-        additionalFeedback: "What a bad language!",
-        comment: "No comment sis",
-        ticketNo: 10006,
-        ticketCreatedDate: createdDate.format("MM/DD/YY"),
-        requester: "Jacky Rusly",
-        group: "S002",
-        category: "Software",
-        subCategory: "Java",
-        description: "Java got a lot of bugs",
-        PICName: "Leslie Aula",
-        status: true
-      },
-      {
-        id: 12,
-        rating: 5,
-        additionalFeedback: "You guys are rock",
-        comment: "No comment! Too good!",
-        ticketNo: 10002,
-        ticketCreatedDate: createdDate.format("MM/DD/YY"),
-        requester: "Achmad Lucky",
-        group: "S003",
-        category: "Software",
-        subCategory: "Javascript",
-        description: "My issue is that I dont get any bugs",
-        PICName: "Leslie Aula",
-        status: false
-      },
-      {
-        id: 13,
-        rating: 1,
-        additionalFeedback: "The language sucks really hard",
-        comment: "Worse!",
-        ticketNo: 10011,
-        ticketCreatedDate: createdDate.format("MM/DD/YY"),
-        requester: "Steven Yang",
-        group: "S001",
-        category: "Software",
-        subCategory: "Pascal",
-        description: "Pascal got a lot of bugs",
-        PICName: "Leslie Aula",
-        status: false
-      },
-      {
-        id: 14,
-        rating: 3,
-        additionalFeedback: "Decent service, but not incredible",
-        comment: "So so",
-        ticketNo: 10012,
-        ticketCreatedDate: createdDate.format("MM/DD/YY"),
-        requester: "Jacky Rusly",
-        group: "S002",
-        category: "Software",
-        subCategory: "Java",
-        description: "Java got a lot of bugs",
-        PICName: "Leslie Aula",
-        status: true
-      }
-    ];
-    this.data = {
-      items: []
-    };
-  }
+  ngOnInit() {}
 
   getPage() {
     const startIndex = (this.pageQuery.page - 1) * this.pageQuery.size;
@@ -226,9 +69,12 @@ export class ReportComponent implements OnInit {
 
   selectAllAction(e) {
     this.isAll = e.target.checked;
-    if (e.target.checked) this.toChecked();
-    else this.toUnchecked();
-    this.data.items.forEach(item => {
+    if (e.target.checked) {
+      this.toChecked();
+    } else {
+      this.toUnchecked();
+    }
+    this.reportList.forEach(item => {
       item.action = this.isAll;
     });
     this.selectedIds = [];
@@ -236,7 +82,7 @@ export class ReportComponent implements OnInit {
   }
 
   manageCheckedItemsOnPage() {
-    this.data.items.forEach(item => {
+    this.reportList.forEach(item => {
       item.action = this.isAll
         ? !this.unselectedIds.includes(item.id)
         : this.selectedIds.includes(item.id);
@@ -309,7 +155,7 @@ export class ReportComponent implements OnInit {
     props.forEach(prop => {
       this.show[prop] = false;
     });
-    this.data.items = [];
+    this.reportList = [];
     this.selectedIds = [];
     this.unselectedIds = [];
     this.isAll = false;
@@ -318,10 +164,10 @@ export class ReportComponent implements OnInit {
   }
 
   fetchTicketStatuses() {
-    this.data = this.reportService
+    this.reportService
       .getTicketStatuses(this.pageQuery, this.period[0], this.period[1])
       .subscribe(response => {
-        this.data.items = response.items;
+        this.reportList = response.items;
         this.pageQuery.count = response.count;
         this.show.ticketStatus = true;
         this.manageCheckedItemsOnPage();
@@ -329,10 +175,10 @@ export class ReportComponent implements OnInit {
   }
 
   fetchUserFeedbacks() {
-    this.data = this.reportService
+    this.reportService
       .getUserFeedbacks(this.pageQuery, this.period[0], this.period[1])
       .subscribe(response => {
-        this.data.items = response.items;
+        this.reportList = response.items;
         this.pageQuery.count = response.count;
         this.show.userFeedback = true;
         this.manageCheckedItemsOnPage();
