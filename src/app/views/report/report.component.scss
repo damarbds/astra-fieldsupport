@@ -1,3 +1,9 @@
-.report-pagination{
+.report-pagination {
   margin-bottom: -16px !important;
+}
+
+.table-cell-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
