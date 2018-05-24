@@ -52,7 +52,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of data.items">
+              <tr *ngFor="let item of reportList">
                 <td class="text-center" style="width: 6%">
                   <input type="checkbox" [(ngModel)]="item.action" (change)="manageSelectedItems($event, item.id)">
                 </td>
@@ -133,7 +133,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of data.items">
+              <tr *ngFor="let item of reportList">
                 <td class="text-center">
                   <input type="checkbox" [(ngModel)]="item.action" (change)="manageSelectedItems($event, item.id)">
                 </td>

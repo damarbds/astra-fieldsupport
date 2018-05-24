@@ -11,13 +11,14 @@ import { ApiResponseQuery, TicketStatusReport, PageQuery } from "../../models";
   styleUrls: ["./report.component.scss"]
 })
 export class ReportComponent implements OnInit {
-  data: any;
+  reportList: any[] = [];
+  period: Date[];
+
   reportChoice: number = 0;
   option: any = {
     ticketStatus: 0,
     userFeedback: 1
   };
-  period: Date[];
   periodHasError: boolean = false;
   show: any = {
     ticketStatus: false,
@@ -73,7 +74,7 @@ export class ReportComponent implements OnInit {
     } else {
       this.toUnchecked();
     }
-    this.data.items.forEach(item => {
+    this.reportList.forEach(item => {
       item.action = this.isAll;
     });
     this.selectedIds = [];
@@ -81,7 +82,7 @@ export class ReportComponent implements OnInit {
   }
 
   manageCheckedItemsOnPage() {
-    this.data.items.forEach(item => {
+    this.reportList.forEach(item => {
       item.action = this.isAll
         ? !this.unselectedIds.includes(item.id)
         : this.selectedIds.includes(item.id);
@@ -154,7 +155,7 @@ export class ReportComponent implements OnInit {
     props.forEach(prop => {
       this.show[prop] = false;
     });
-    this.data.items = [];
+    this.reportList = [];
     this.selectedIds = [];
     this.unselectedIds = [];
     this.isAll = false;
@@ -163,10 +164,10 @@ export class ReportComponent implements OnInit {
   }
 
   fetchTicketStatuses() {
-    this.data = this.reportService
+    this.reportService
       .getTicketStatuses(this.pageQuery, this.period[0], this.period[1])
       .subscribe(response => {
-        this.data.items = response.items;
+        this.reportList = response.items;
         this.pageQuery.count = response.count;
         this.show.ticketStatus = true;
         this.manageCheckedItemsOnPage();
@@ -174,10 +175,10 @@ export class ReportComponent implements OnInit {
   }
 
   fetchUserFeedbacks() {
-    this.data = this.reportService
+    this.reportService
       .getUserFeedbacks(this.pageQuery, this.period[0], this.period[1])
       .subscribe(response => {
-        this.data.items = response.items;
+        this.reportList = response.items;
         this.pageQuery.count = response.count;
         this.show.userFeedback = true;
         this.manageCheckedItemsOnPage();
