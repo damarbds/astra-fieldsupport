@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { News, Recipient, PageQuery } from '../../models';
-import { NewsService } from '../../services/news.service';
+import { NewsService } from '../../services';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

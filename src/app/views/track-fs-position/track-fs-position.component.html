@@ -1,5 +1,5 @@
 <div style="position: relative;">
-  <agm-map [latitude]="currentLat" [longitude]="currentLng" [zoom]="5">
+  <agm-map [latitude]="currentLat" [longitude]="currentLng" [zoom]="zoom">
     <agm-marker-cluster [imagePath]="'https://googlemaps.github.io/js-marker-clusterer/images/m'">
       <agm-marker *ngFor="let fs of fieldSupports" [latitude]="fs.lat" [longitude]="fs.lng" [iconUrl]="'assets/img/icon-bike.png'"
         (markerClick)="selectFieldSupport(fs)">
@@ -7,24 +7,41 @@
     </agm-marker-cluster>
   </agm-map>
 
-  <div class="card floating-box">
-    <div class="card-body">
-      <input type="text" #keyword class="form-control" (change)="searchFieldSupports(keyword)" />
+  <div class="floating-box">
+    <div class="card" *ngIf="!selectedFieldSupport">
+      <div class="card-header">
+        <form (submit)="searchFieldSupports(keyword.value)">
+          <input type="text" name="keyword" #keyword class="form-control" placeholder="Search Field Support" autocomplete="off" />
+        </form>
+      </div>
+      <div class="card-body p-0">
+        <div class="field-support-item-list">
+          <div class="field-support-item" *ngFor="let fs of filteredFieldSupports" (click)="selectFieldSupport(fs)">
+            <b>{{ fs.name }}</b>
+            <br/> {{ fs.username }}
+            <br/> {{ fs.email }}
+            <br/> {{ fs.phone }}
+          </div>
+        </div>
+      </div>
+    </div>
 
-      <pre>{{selectedFieldSupport|json}}</pre>
+    <div class="card" *ngIf="selectedFieldSupport">
+      <div class="card-header">
+        <div class="form-group-horizontal">
+          <form (submit)="getPossibleRoutes()">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Field Support"  />
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search Destination" />
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="card-body">
+
+      </div>
     </div>
   </div>
-</div>
-
-<style>
-  .floating-box {
-    position: absolute;
-    width: 320px;
-    z-index: 1;
-    BACKGROUND: #fff;
-    display: block;
-    top: 1rem;
-    left: 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
-</style>

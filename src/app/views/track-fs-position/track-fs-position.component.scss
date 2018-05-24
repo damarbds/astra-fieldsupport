@@ -1,3 +1,32 @@
 agm-map {
     height: 80vh;
 }
+
+.floating-box {
+    position: absolute;
+    width: 320px;
+    z-index: 1;
+    display: block;
+    top: 1rem;
+    left: 1rem;
+}
+
+.floating-box .card {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.field-support-item-list {
+    max-height: 40vh;
+    overflow-y: auto;
+}
+
+.field-support-item {
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+
+    cursor: pointer;
+}
+
+.field-support-item:hover {
+    background-color: #dddddddd
+}
