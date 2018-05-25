@@ -1,1 +1,17 @@
 // Here you can add other styles
+.sidebar {
+    background-color: #004996;
+
+    .nav-link {
+        &.active {
+            background-color: rgba(0,0,0,0.4);
+        }
+        &:hover {
+            background-color: rgba(0,0,0,0.2);
+        }
+
+        .nav-icon {
+            color: #fff;
+        }
+    }
+}

@@ -1,8 +1,8 @@
 import { Component, OnInit, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { FieldSupport, PageQuery } from '../../models';
-import { ProfileService } from '../../services';
+import { ProfileService, MoonlayGmapService } from '../../services';
 import { } from 'googlemaps';
-import { MapsAPILoader } from '@agm/core';
+import { MapsAPILoader, LatLng } from '@agm/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -12,26 +12,33 @@ import { FormControl } from '@angular/forms';
 })
 export class TrackFsPositionComponent implements OnInit {
 
+  selectedRoute: any;
   zoom: number = 5;
   currentLat: number;
   currentLng: number;
 
   destinationLat: number;
   destinationLng: number;
+  avoidTolls: boolean = true;
+
+  availableRoutes: any[];
 
   selectedFieldSupport: FieldSupport;
   fieldSupports: Array<FieldSupport>;
   filteredFieldSupports: Array<FieldSupport> = [];
   pageQuery: PageQuery = new PageQuery();
 
+  dir: any;
+
   // public searchControl: FormControl;
-  @ViewChild("search")
-  public searchElementRef: ElementRef;
+  @ViewChild("searchDestination")
+  public searchDestinationElementRef: ElementRef;
 
   constructor(
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private moonlayGmapService: MoonlayGmapService
   ) { }
 
   ngOnInit() {
@@ -48,9 +55,10 @@ export class TrackFsPositionComponent implements OnInit {
 
     this.mapsAPILoader.load().then(() => {
       let autocomplete = new google.maps.places.Autocomplete(
-        this.searchElementRef.nativeElement, {
+        this.searchDestinationElementRef.nativeElement, {
           types: []
         });
+
       autocomplete.addListener("place_changed", () => {
         this.ngZone.run(() => {
           //get the place result
@@ -59,15 +67,27 @@ export class TrackFsPositionComponent implements OnInit {
           if (place.geometry === undefined || place.geometry === null) {
             return;
           }
+
           this.destinationLat = place.geometry.location.lat();
           this.destinationLng = place.geometry.location.lng();
 
-          // this.currentLat = (this.selectedFieldSupport.lat + this.destinationLat) / 2;
-          // this.currentLng = (this.selectedFieldSupport.lng + this.destinationLng) / 2;
+          // this.getRoutes();
         });
       });
     });
   }
+
+  // getRoutes() {
+  //   let origin = `${this.selectedFieldSupport.lat},${this.selectedFieldSupport.lng}`;
+  //   let destination = `${this.destinationLat},${this.destinationLng}`;
+  //   let avoidTolls = this.avoidTolls;
+
+  //   this.moonlayGmapService.getRoutes(origin, destination, avoidTolls)
+  //     .subscribe(response => {
+  //       debugger
+  //       this.availableRoutes = response.routes;
+  //     });
+  // }
 
   getFieldSupports(pageQuery: PageQuery) {
     if (pageQuery.keyword == '') {
@@ -87,8 +107,8 @@ export class TrackFsPositionComponent implements OnInit {
             email: 'rahmat.hidayat@ai.astra.co.id',
             phone: '081208120812',
 
-            lat: -6.121435,
-            lng: 106.774125
+            lat: -6.222796,
+            lng: 106.8119382
           },
           {
             id: 2,
@@ -117,7 +137,7 @@ export class TrackFsPositionComponent implements OnInit {
   selectFieldSupport(fieldSupport: FieldSupport) {
     this.selectedFieldSupport = fieldSupport;
 
-    this.zoom = 12;
+    this.zoom = 14;
 
     this.currentLat = fieldSupport.lat;
     this.currentLng = fieldSupport.lng;
@@ -129,6 +149,20 @@ export class TrackFsPositionComponent implements OnInit {
 
   searchFieldSupports(keyword: string) {
     this.filteredFieldSupports = this.fieldSupports.filter(t => t.name.toLowerCase().indexOf(keyword.toLowerCase()) > -1).splice(0, 5);
+  }
+
+  selectRoute(route: any) {
+    this.selectedRoute = route;
+  }
+
+  removeSelectedRoute() {
+    delete this.selectedRoute;
+  }
+
+  directionChange(e: any) {
+    console.log(e);
+    this.availableRoutes = e.routes;
+    delete this.selectedRoute;
   }
 
 }

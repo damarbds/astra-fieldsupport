@@ -7,6 +7,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AgmCoreModule } from '@agm/core';
 import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
+import { AgmDirectionModule } from 'agm-direction';
 import { environment } from '../../../environments/environment';
 
 @NgModule({
@@ -22,6 +23,7 @@ import { environment } from '../../../environments/environment';
       apiKey: environment.googleApiKey,
       libraries: ['places']
     }),
+    AgmDirectionModule,
     ReactiveFormsModule
   ],
   declarations: [],
@@ -35,6 +37,7 @@ import { environment } from '../../../environments/environment';
     NgSelectModule,
     AgmCoreModule,
     AgmJsMarkerClustererModule,
+    AgmDirectionModule,
     ReactiveFormsModule
   ]
 })
