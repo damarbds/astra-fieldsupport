@@ -100,4 +100,28 @@ export class FormAlertComponent implements OnInit {
     this.unselectedIds = [];
   }
 
+  passUser(){
+    this.user = [
+      {
+        "id": 1,
+        "name": "Faridho",
+        "user_id" : "jhoendoe001",
+        "email" : "jhon.doe@gmail.com"
+      },
+      {
+        "id": 2,
+        "name": "Faridho",
+        "user_id" : "jhoendoe002",
+        "email" : "jhon.doe2@gmail.com"
+      }
+    ]
+  }
+
+  delete(){
+    var confirm = window.confirm("Delete this data??")
+    if (confirm == true) {
+      window.alert("Delete data Success!!")
+    }
+  }
+
 }
