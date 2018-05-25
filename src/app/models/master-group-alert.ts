@@ -5,17 +5,19 @@ export class User {
 }
 
 export class AlertGroupList {
-    id : number
-    code : string;
-    userCount : number;
+    id: number
+    code: string;
+    userCount: number;
 }
 
 export class AlertGroupDetail {
-    code : string;
-    user :
-        [{
-            userID: string;
-            name: string;
-            email: string
-        }]
+    code: string;
+    user:
+        [
+            {
+                userID: string;
+                name: string;
+                email: string
+            }
+        ]
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MasterFeedbackService } from '../../services/master-service/master-feedback.service';
 
 @Component({
   selector: 'app-master-feedback',
@@ -8,45 +9,33 @@ import { Router } from '@angular/router';
 })
 export class MasterFeedbackComponent implements OnInit {
 
-  constructor(private router: Router) { }
-  aplication :any[]= [
-    {
-      "id": 1,
-      "name": 'ApliTest1'
-    },
-    {
-      "id": 2,
-      "name": 'ApliTest2'
-    },
-    {
-      "id": 3,
-      "name": 'ApliTest3'
-    }
-  ]
+  constructor(private router: Router, private feedbackService : MasterFeedbackService) { }
+  aplication :any = []
 
-  data: any[] = [
-    {
-      "aplication" : 'ApliTest1',
-      "name" : 'TestName1',
-      "description" : 'Test Description'
-    },
-    {
-      "aplication" : 'ApliTest2',
-      "name" : 'TestName2',
-      "description" : 'Test Description'
-    },
-    {
-      "aplication" : 'ApliTest3',
-      "name" : 'TestName3',
-      "description" : 'Test Description'
-    },
-  ]
+  data: any = []
 
   ngOnInit() {
+    this.feedbackService.getApp().subscribe(data => {
+      var temp = <any>data
+      this.aplication = temp.items
+      this.feedbackService.getFeedbackList().subscribe(data2 => {
+        var temp2 = <any>data2
+        this.data = temp2.items
+        console.log(this.data)
+      })
+    })
   }
 
   create(){
     this.router.navigate(['data-master/create'])
+  }
+
+  edit(id){
+    this.router.navigate(['data-master/edit/'+id])
+  }
+
+  detail(id){
+    this.router.navigate(['data-master/detail/'+id])
   }
 
   delete(){

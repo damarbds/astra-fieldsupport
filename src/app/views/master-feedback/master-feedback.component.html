@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-body">
     <div class="col-6">
-      <div class="row">
+      <div class="form-group row">
         <div class="col-2">
           <label>Aplication</label>
         </div>
@@ -12,7 +12,7 @@
           </select>
         </div>
       </div>
-      <div class="row">
+      <div class="form-group row">
           <div class="col-2">
               <label>Name</label>
             </div>
@@ -20,38 +20,40 @@
               <input class="form-control" type="text" placeholder="Test" id="">
             </div>
       </div>
-      <div class="row" style="margin-left: 1px;margin-top: 8px;margin-bottom: 5px;">
-        <button class="btn btn-sm btn-primary" >search</button>
-        <button class="btn btn-sm btn-primary" (click)="create()">clear</button>
+      <div class="form-group row" style="margin-left: 1px;margin-top: 8px;margin-bottom: 5px;">
+        <button class="btn btn-square btn-sm btn-primary" style="margin-right: 3px">search</button>
+        <button class="btn btn-square btn-sm btn-primary" (click)="create()">clear</button>
       </div>
-      <div class="row" style="margin-left: 1px;margin-top: 8px;margin-bottom: 5px">
-        <button class="btn btn-sm btn-primary" (click)="create()">Add New Data</button>
+      <div class="form-group row" style="margin-left: 1px;margin-top: 8px;margin-bottom: 5px">
+        <button class="btn btn-square btn-sm btn-primary" (click)="create()">Add New Data</button>
       </div>
     </div>
-    <table class="table">
-        <thead>
-          <tr>
-            <th style="max-width: 50px;">Action</th>
-            <th>Application</th>
-            <th>Name</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of data">
-            <td style="max-width: 50px;">
-              <button class="icon-magnifier btn-success" (click)="create()"></button>
-              <button class="icon-note btn-primary" (click)="create()"></button>
-              <button class="icon-trash btn-danger" (click)="delete()"></button>
-            </td>
-            <td>{{item.aplication}}</td>
-            <td>{{item.name}}</td>
-            <td>{{item.description}}</td>
-          </tr>
-        </tbody>
-      </table>
   </div>
-  <div class="body">
-      
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th style="max-width: 50px;">Action</th>
+          <th>Application</th>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of data">
+          <td style="max-width: 50px;">
+            <button class="icon-magnifier btn-success" (click)="detail(item.id)"></button>
+            <button class="icon-note btn-primary" (click)="edit(item.id)"></button>
+            <button class="icon-trash btn-danger" (click)="delete()"></button>
+          </td>
+          <td>{{item.applicationName}}</td>
+          <td>{{item.feedbackName}}</td>
+          <td>{{item.description}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
