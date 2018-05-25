@@ -100,7 +100,21 @@
       </div>
     </div>
     <div class="card-footer">
-      <button type="button" class="btn btn-success" (click)="downloadExcel()">Download as Excel</button>
+      <form ngNoForm action="{{ url }}/api/report/ticket-status/print" method="POST">
+        <div *ngIf="!isAll" hidden>
+          <div *ngFor="let selectedId of selectedIds; let i = index;">
+            <input type="text" name="ids[{{ i }}]" value="{{ selectedId }}">
+          </div>
+          <input type="checkbox" name="exclude">
+        </div>
+        <div *ngIf="isAll" hidden>
+          <div *ngFor="let unselectedId of unselectedIds; let i = index;">
+            <input type="text" name="ids[{{ i }}]" value="{{ unselectedId }}">
+          </div>
+          <input type="checkbox" name="exclude" value=true checked>
+        </div>
+        <input class="btn btn-success" type="submit" value="Download as Excel">
+      </form>
     </div>
   </div>
   <div *ngIf="show.userFeedback" class="animated fadeIn card">
@@ -179,7 +193,21 @@
       </div>
     </div>
     <div class="card-footer">
-      <button type="button" class="btn btn-success" (click)="downloadExcel()">Download as Excel</button>
+      <form ngNoForm action="{{ url }}/api/report/feedback-user/print" method="POST">
+        <div *ngIf="!isAll" hidden>
+          <div *ngFor="let selectedId of selectedIds; let i = index;">
+            <input type="text" name="ids[{{ i }}]" value="{{ selectedId }}">
+          </div>
+          <input type="checkbox" name="exclude">
+        </div>
+        <div *ngIf="isAll" hidden>
+          <div *ngFor="let unselectedId of unselectedIds; let i = index;">
+            <input type="text" name="ids[{{ i }}]" value="{{ unselectedId }}">
+          </div>
+          <input type="checkbox" name="exclude" value=true checked>
+        </div>
+        <input class="btn btn-success" type="submit" value="Download as Excel">
+      </form>
     </div>
   </div>
 </div>
