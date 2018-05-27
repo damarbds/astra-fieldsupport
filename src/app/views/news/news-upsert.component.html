@@ -10,8 +10,14 @@
             </label>
           </div>
           <div class="col-md-8">
-            <ng-select [items]="recipients" bindLabel="alias" [hideSelected]="true" [loading]="recipientLoading" [multiple]="true"
-              (change)="recipientsOnChange($event)">
+            <ng-select [items]="recipients"
+              name="recipients"
+              bindLabel="alias"
+              [multiple]="true"
+              [hideSelected]="true"
+              [loading]="loadingGetRecipients"
+              [typeahead]="recipientsTypeahead"
+              [(ngModel)]="news.recipients">
               <ng-template ng-option-tmp let-item="item">
                 {{ item.alias }}
                 <br/>
@@ -27,7 +33,7 @@
           <div class="col-md-2">
           </div>
           <div class="col-md-8">
-            <input type="text" name="recipients" class="form-control" [(ngModel)]="news.title" />
+            <input type="text" name="title" class="form-control" [(ngModel)]="news.title" />
           </div>
         </div>
         <div class="form-group row">
