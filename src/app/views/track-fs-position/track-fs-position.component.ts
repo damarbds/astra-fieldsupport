@@ -1,6 +1,6 @@
 import { Component, OnInit, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { FieldSupport, PageQuery } from '../../models';
-import { ProfileService, MoonlayGmapService } from '../../services';
+import { ProfileService } from '../../services';
 import { } from 'googlemaps';
 import { MapsAPILoader, LatLng } from '@agm/core';
 import { FormControl } from '@angular/forms';
@@ -24,7 +24,7 @@ export class TrackFsPositionComponent implements OnInit {
   availableRoutes: any[];
 
   selectedFieldSupport: FieldSupport;
-  fieldSupports: Array<FieldSupport>;
+  fieldSupports: Array<FieldSupport> = new Array<FieldSupport>();
   filteredFieldSupports: Array<FieldSupport> = [];
   pageQuery: PageQuery = new PageQuery();
 
@@ -37,8 +37,7 @@ export class TrackFsPositionComponent implements OnInit {
   constructor(
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
-    private profileService: ProfileService,
-    private moonlayGmapService: MoonlayGmapService
+    private profileService: ProfileService
   ) { }
 
   ngOnInit() {
@@ -59,6 +58,7 @@ export class TrackFsPositionComponent implements OnInit {
           types: []
         });
 
+      autocomplete.setComponentRestrictions({ 'country': ['id'] });
       autocomplete.addListener("place_changed", () => {
         this.ngZone.run(() => {
           //get the place result
@@ -70,30 +70,12 @@ export class TrackFsPositionComponent implements OnInit {
 
           this.destinationLat = place.geometry.location.lat();
           this.destinationLng = place.geometry.location.lng();
-
-          // this.getRoutes();
         });
       });
     });
   }
 
-  // getRoutes() {
-  //   let origin = `${this.selectedFieldSupport.lat},${this.selectedFieldSupport.lng}`;
-  //   let destination = `${this.destinationLat},${this.destinationLng}`;
-  //   let avoidTolls = this.avoidTolls;
-
-  //   this.moonlayGmapService.getRoutes(origin, destination, avoidTolls)
-  //     .subscribe(response => {
-  //       debugger
-  //       this.availableRoutes = response.routes;
-  //     });
-  // }
-
   getFieldSupports(pageQuery: PageQuery) {
-    if (pageQuery.keyword == '') {
-      this.fieldSupports = [];
-    }
-
     this.profileService.getFieldSupports(pageQuery)
       .subscribe(response => {
         // nanti buka ini ya

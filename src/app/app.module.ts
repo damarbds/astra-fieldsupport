@@ -44,7 +44,7 @@ import { NewsModule } from './views/news/news.module';
 import { ReportModule } from "./views/report/report.module";
 import { TrackFsPositionModule } from "./views/track-fs-position/track-fs-position.module";
 
-import { NewsService, ProfileService, MoonlayGmapService } from "./services";
+import { NewsService, ProfileService } from "./services";
 import { ToastrModule, ToastrService } from "ngx-toastr";
 
 @NgModule({
@@ -84,8 +84,7 @@ import { ToastrModule, ToastrService } from "ngx-toastr";
     },
     ToastrService,
     NewsService,
-    ProfileService,
-    MoonlayGmapService
+    ProfileService
   ],
   bootstrap: [AppComponent]
 })
