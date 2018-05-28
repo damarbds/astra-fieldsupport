@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class NewsListComponent implements OnInit {
   // for filter purpose
-  keyword: string;
+  keyword: string = '';
   dateRange: any[] = [];
 
   newsList: News[];
@@ -35,6 +35,8 @@ export class NewsListComponent implements OnInit {
       endDate = this.selectedDateRange[1];
     }
 
+    this.pageQuery.page = event.page;
+
     this.getNews(this.pageQuery, this.selectedDateRange);
   }
 
@@ -46,7 +48,7 @@ export class NewsListComponent implements OnInit {
 
     this.getNews(this.pageQuery, this.selectedDateRange);
   }
-  
+
   getNews(pageQuery: PageQuery, dateRange?) {
     let startDate: Date;
     let endDate: Date;

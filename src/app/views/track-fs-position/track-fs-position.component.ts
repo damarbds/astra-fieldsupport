@@ -28,9 +28,6 @@ export class TrackFsPositionComponent implements OnInit {
   filteredFieldSupports: Array<FieldSupport> = [];
   pageQuery: PageQuery = new PageQuery();
 
-  dir: any;
-
-  // public searchControl: FormControl;
   @ViewChild("searchDestination")
   public searchDestinationElementRef: ElementRef;
 

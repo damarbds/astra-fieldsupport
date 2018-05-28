@@ -27,11 +27,15 @@ export class NewsService {
     // orderby
     // queryString.push(`$orderby=${pageQuery.orderBy} ${pageQuery.sort}`);
     queryString.push(`$orderby=StartDate`);
-    // filter - keyword
-    queryString.push(`$filter=substringof('${pageQuery.keyword}', Title) eq true`);
-    // queryString.push(`$search=${pageQuery.keyword}`);
-    // filter - date
-    queryString.push(`$filter=StartDate gt ${startDate} and EndDate gt ${endDate}`);
+
+    let filters: string[] = new Array;
+    filters.push(`(substringof('${pageQuery.keyword}', Title) eq true)`);
+    if (startDate)
+      filters.push(`and (StartDate ge datetime'${startDate.toISOString()}')`);
+    if (endDate)
+      filters.push(`and (EndDate le datetime'${endDate.toISOString()}')`);
+
+    queryString.push(`$filter=${filters.join(' ')}`);
 
     return this.http.post<ApiResponseQuery<News>>(`${environment.apiUrl}/api/alert/list?${queryString.join('&')}`, {});
   }
@@ -55,23 +59,9 @@ export class NewsService {
   getRecipients(keyword: string = null): Observable<ApiResponseQuery<Recipient>> {
     let queryString: string[] = new Array;
     queryString.push(`$top=20`);
-    queryString.push(`$filter=substringof('${keyword}', Alias) eq true`);
-    // queryString.push(`$search=${keyword}`);
-
-    return this.http.post<ApiResponseQuery<Recipient>>(`${environment.apiUrl}/api/recipient/list?${queryString.join('&')}`, {});
-    // let result: ApiResponseQuery<Recipient> = new ApiResponseQuery<Recipient>();
-    // result.succeed = true;
-    // result.message = '';
-    // result.data = new QueryResult<Recipient>();
-    // result.data.count = 5;
-    // result.data.items = new Array<Recipient>();
-    // result.data.items.push({ alias: 'Kuping', id: 1, type: 'GROUP' });
-    // result.data.items.push({ alias: 'Setip', id: 2, type: 'INDIVIDUAL' });
-    // result.data.items.push({ alias: 'Kotak', id: 1, type: 'GROUP' });
-    // result.data.items.push({ alias: 'Pensil', id: 1, type: 'INDIVIDUAL' });
-    // result.data.items.push({ alias: 'Rambut', id: 1, type: 'GROUP' });
-
-    // return of(result);
+    // queryString.push(`$filter=substringof('${keyword}', Alias) eq true`);
+    queryString.push(`keyword=${keyword}`);
+    return this.http.post<ApiResponseQuery<Recipient>>(`${environment.apiUrl}/api/alert/recipients?${queryString.join('&')}`, {});
   }
 
 }

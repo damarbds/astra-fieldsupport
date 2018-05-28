@@ -1,4 +1,17 @@
 // Here you can add other styles
+.app-header {
+    .navbar-brand {
+        width: 200px;
+
+        .navbar-brand-full {
+            width: 100%;
+        }
+    }
+
+    .navbar-toggler {
+        display: none;
+    }
+}
 .sidebar {
     background-color: #004996;
 

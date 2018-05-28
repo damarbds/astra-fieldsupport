@@ -46,7 +46,7 @@
             </label>
           </div>
           <div class="col-md-8">
-            <input type="text" name="startDate" class="form-control" [(ngModel)]="news.startDate" bsDatepicker [disabled]="checkStartDateToday"
+            <input type="text" name="startDate" class="form-control" [(ngModel)]="news.startDate" bsDatepicker [disabled]="checkStartDateToday" autocomplete="off"
             />
           </div>
         </div>
@@ -60,7 +60,7 @@
             </label>
           </div>
           <div class="col-md-8">
-            <input type="text" name="endDate" class="form-control" [(ngModel)]="news.endDate" bsDatepicker [disabled]="checkEndDateNever" />
+            <input type="text" name="endDate" class="form-control" [(ngModel)]="news.endDate" bsDatepicker [disabled]="checkEndDateNever" autocomplete="off" />
           </div>
         </div>
         <div class="form-group row">

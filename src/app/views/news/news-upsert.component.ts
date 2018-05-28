@@ -16,13 +16,13 @@ export class NewsUpsertComponent implements OnInit {
   news: News;
 
   // ini mesti diganti pake lazyloading ya nanti
-  // recipients: Recipient[];
-  recipients: Recipient[] = [
-    { id: 1, alias: 'IT Department', type: 'GROUP' },
-    { id: 2, alias: 'HR Department', type: 'GROUP' },
-    { id: 3, alias: 'RND Department', type: 'GROUP' },
-    { id: 4, alias: 'Rahmat', type: 'INDIVIDUAL' },
-  ];
+  recipients: Recipient[];
+  // recipients: Recipient[] = [
+  //   { id: 1, alias: 'IT Department', type: 'GROUP' },
+  //   { id: 2, alias: 'HR Department', type: 'GROUP' },
+  //   { id: 3, alias: 'RND Department', type: 'GROUP' },
+  //   { id: 4, alias: 'Rahmat', type: 'INDIVIDUAL' },
+  // ];
 
   checkSendToAll: boolean;
   checkStartDateToday: boolean;
@@ -48,7 +48,7 @@ export class NewsUpsertComponent implements OnInit {
       this.getNewsById(this.id);
     }
 
-    // this.getRecipients();
+    this.getRecipients();
   }
 
   getNewsById(id: number) {
@@ -113,6 +113,7 @@ export class NewsUpsertComponent implements OnInit {
       this.recipients = response.items;
       this.loadingGetRecipients = false;
     }, () => {
+      this.loadingGetRecipients = false;
       this.recipients = [];
     });
   }
