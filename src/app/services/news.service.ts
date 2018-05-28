@@ -63,5 +63,4 @@ export class NewsService {
     queryString.push(`keyword=${keyword}`);
     return this.http.post<ApiResponseQuery<Recipient>>(`${environment.apiUrl}/api/alert/recipients?${queryString.join('&')}`, {});
   }
-
 }

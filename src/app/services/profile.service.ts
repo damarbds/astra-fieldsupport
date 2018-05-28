@@ -13,14 +13,24 @@ export class ProfileService {
     private http: HttpClient
   ) { }
 
-  getFieldSupports(pageQuery: PageQuery): Observable<ApiResponseQuery<FieldSupport>> {
+  // getFieldSupports(pageQuery: PageQuery): Observable<ApiResponseQuery<FieldSupport>> {
+  //   let queryString: string[] = new Array;
+  //   // top
+  //   queryString.push(`$top=${pageQuery.size}`);
+  //   // skip
+  //   queryString.push(`$skip=${(pageQuery.page - 1) * pageQuery.size}`);
+
+  //   return this.http.post<ApiResponseQuery<FieldSupport>>(`${environment.apiUrl}/api/profiles/list/fs?${queryString.join('&')}`, {});
+  // }
+
+  getFieldSupports(pageQuery: PageQuery): Promise<ApiResponseQuery<FieldSupport>> {
     let queryString: string[] = new Array;
     // top
     queryString.push(`$top=${pageQuery.size}`);
     // skip
     queryString.push(`$skip=${(pageQuery.page - 1) * pageQuery.size}`);
 
-    return this.http.post<ApiResponseQuery<FieldSupport>>(`${environment.apiUrl}/api/profiles/list/fs?${queryString.join('&')}`, {});
+    return this.http.post<ApiResponseQuery<FieldSupport>>(`${environment.apiUrl}/api/profiles/list/fs?${queryString.join('&')}`, {}).toPromise();
   }
 
   // countFieldSupports(): number {

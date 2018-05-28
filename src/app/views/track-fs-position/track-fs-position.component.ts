@@ -1,9 +1,9 @@
 import { Component, OnInit, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { FieldSupport, PageQuery } from '../../models';
 import { ProfileService } from '../../services';
-import { } from 'googlemaps';
 import { MapsAPILoader, LatLng } from '@agm/core';
 import { FormControl } from '@angular/forms';
+import { } from 'googlemaps';
 
 @Component({
   selector: 'app-track-fs-position',
@@ -12,16 +12,16 @@ import { FormControl } from '@angular/forms';
 })
 export class TrackFsPositionComponent implements OnInit {
 
-  selectedRoute: any;
   zoom: number = 5;
   currentLat: number;
   currentLng: number;
 
-  destinationLat: number;
-  destinationLng: number;
   avoidTolls: boolean = true;
 
   availableRoutes: any[];
+  selectedRoute: any;
+  openDetailSelectedRoute: boolean = false;
+  destination: any;
 
   selectedFieldSupport: FieldSupport;
   fieldSupports: Array<FieldSupport> = new Array<FieldSupport>();
@@ -38,16 +38,10 @@ export class TrackFsPositionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // navigator.geolocation.getCurrentPosition(position => {
-    //   this.currentLat = position.coords.latitude;
-    //   this.currentLng = position.coords.longitude;
-    // });
-
-    // center of Indonesia
     this.currentLat = -2.4151583;
     this.currentLng = 108.8264017;
 
-    this.getFieldSupports(this.pageQuery);
+    this.getFieldSupports();
 
     this.mapsAPILoader.load().then(() => {
       let autocomplete = new google.maps.places.Autocomplete(
@@ -65,52 +59,72 @@ export class TrackFsPositionComponent implements OnInit {
             return;
           }
 
-          this.destinationLat = place.geometry.location.lat();
-          this.destinationLng = place.geometry.location.lng();
+          this.destination = {
+            lat: place.geometry.location.lat(),
+            lng: place.geometry.location.lng()
+          }
         });
       });
     });
   }
 
-  getFieldSupports(pageQuery: PageQuery) {
-    this.profileService.getFieldSupports(pageQuery)
-      .subscribe(response => {
-        // nanti buka ini ya
-        // this.fieldSupports = response.items;
+  getFieldSupports() {
+    this.profileService.getFieldSupports(this.pageQuery)
+      .then(response => {
+        this.pageQuery.count = response.count;
+        
+        let totalPage = Math.floor(this.pageQuery.count / this.pageQuery.size);
 
-        this.fieldSupports = [
-          {
-            id: 1,
-            name: 'Rahmat Hidayat',
-            username: 'rahmathidayat',
-            email: 'rahmat.hidayat@ai.astra.co.id',
-            phone: '081208120812',
+        for (let i = 0; i < totalPage; i++) {
+          this.pageQuery.page = i;
 
-            lat: -6.222796,
-            lng: 106.8119382
-          },
-          {
-            id: 2,
-            name: 'Jimmy Hidayat',
-            username: 'jimmyhidayat',
-            email: 'jimmy.hidayat@ai.astra.co.id',
-            phone: '081802866694',
-
-            lat: -6.211,
-            lng: 106.8
-          },
-          {
-            id: 3,
-            name: 'Dhifa Irawan',
-            username: 'dhifairawan',
-            email: 'dhifa@ai.astra.co.id',
-            phone: '081802866694',
-
-            lat: -6.25,
-            lng: 106.7
-          }
-        ];
+          this.profileService.getFieldSupports(this.pageQuery)
+            .then(response => {
+              for (let j = 0; j < response.items.length; j++) {
+                this.fieldSupports.push(response.items[j]);
+              }
+            });
+        }
       });
+
+    // this.profileService.getFieldSupports(pageQuery)
+    //   .subscribe(response => {
+    //     // nanti buka ini ya
+    //     // this.fieldSupports = response.items;
+
+    //     this.fieldSupports = [
+    //       {
+    //         id: 1,
+    //         name: 'Rahmat Hidayat',
+    //         username: 'rahmathidayat',
+    //         email: 'rahmat.hidayat@ai.astra.co.id',
+    //         phone: '081208120812',
+
+    //         lat: -6.222796,
+    //         lng: 106.8119382
+    //       },
+    //       {
+    //         id: 2,
+    //         name: 'Jimmy Hidayat',
+    //         username: 'jimmyhidayat',
+    //         email: 'jimmy.hidayat@ai.astra.co.id',
+    //         phone: '081802866694',
+
+    //         lat: -6.211,
+    //         lng: 106.8
+    //       },
+    //       {
+    //         id: 3,
+    //         name: 'Dhifa Irawan',
+    //         username: 'dhifairawan',
+    //         email: 'dhifa@ai.astra.co.id',
+    //         phone: '081802866694',
+
+    //         lat: -6.25,
+    //         lng: 106.7
+    //       }
+    //     ];
+    //   });
   }
 
   selectFieldSupport(fieldSupport: FieldSupport) {
@@ -139,9 +153,9 @@ export class TrackFsPositionComponent implements OnInit {
   }
 
   directionChange(e: any) {
-    console.log(e);
     this.availableRoutes = e.routes;
-    delete this.selectedRoute;
+
+    this.selectedRoute = this.availableRoutes[0];
   }
 
 }
