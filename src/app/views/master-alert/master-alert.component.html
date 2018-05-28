@@ -1,45 +1,58 @@
-<div class="card">
-  <div class="card-body">
-    <div class="col-6">
-      
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-body">
       <div class="row">
-          <div class="col-4">
-              <label>Alert Group Name</label>
+        <div class="col-sm-12">
+          <div class="form-group row">
+            <label class="col-sm-3 col-md-2 col-form-label">
+              Group Name
+            </label>
+            <div class="col-sm-9 col-md-4">
+              <input type="text" class="form-control" [(ngModel)]="search"/>
             </div>
-            <div class="col-8">
-              <input class="form-control" type="text" placeholder="Test" id="">
-            </div>
-      </div>
-      <div class="row" style="margin-left: 1px;margin-top: 8px;margin-bottom: 5px;">
-        <button class="btn btn-sm btn-primary" >search</button>
-        <button class="btn btn-sm btn-primary" (click)="create()">clear</button>
-      </div>
-      <div class="row" style="margin-left: 1px;margin-top: 8px;margin-bottom: 5px">
-        <button class="btn btn-sm btn-primary" (click)="create()">Add New Data</button>
+          </div>
+        </div>
       </div>
     </div>
-    <table class="table">
-        <thead>
-          <tr>
-            <th style="max-width: 50px;">Action</th>
-            <th>Alert Group Name</th>
-            <th>Count of User</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of data">
-            <td style="max-width: 50px;">
-              <button class="icon-doc btn-success" (click)="create()"></button>
-              <button class="icon-puzzle btn-primary" (click)="create()"></button>
-              <button class="icon-location-pin btn-danger" (click)="delete()"></button>
-            </td>
-            <td>{{item.alert}}</td>
-            <td>{{item.count}}</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="card-footer">
+      <button class="btn btn-sm btn-primary" (click)="findData(search)"><i class="fa fa-dot-circle-o"></i> Search</button>&nbsp;
+      <button class="btn btn-sm btn-danger" (click)="clearSearch()"><i class="fa fa-ban"></i> Clear</button>
+    </div>
   </div>
-  <div class="body">
-      
+  
+  <div class="card">
+    <div class="card-header">
+      <button class="btn btn-primary pull-left" (click)="create()">
+        Add New Data
+      </button>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-12">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th style="max-width: 50px;">Action</th>
+                <th>Alert Group Name</th>
+                <th>Count of User</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of returnData">
+                <td style="max-width: 50px;">
+                  <button class="icon-doc btn-success" (click)="create()"></button>
+                  <button class="icon-puzzle btn-primary" (click)="create()"></button>
+                  <button class="icon-location-pin btn-danger" (click)="delete()"></button>
+                </td>
+                <td>{{item.alert}}</td>
+                <td>{{item.count}}</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <pagination [totalItems]="count" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" (pageChanged)="pageChanged($event)"></pagination>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
