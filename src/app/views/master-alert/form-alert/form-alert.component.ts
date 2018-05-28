@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form-alert',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormAlertComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
-
+  
+  back(){
+    this.router.navigate(['/master-alert'])
+  }
 }

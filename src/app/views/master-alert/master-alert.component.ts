@@ -31,5 +31,11 @@ export class MasterAlertComponent implements OnInit {
   create() {
     this.router.navigate(['master-alert/create'])
   }
+  delete(){
+    var confirm = window.confirm("Delete this data")
+    if (confirm == true) {
+      window.alert("Delete data Success!!")
+    }
+  }
 
 }
