@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NewsService } from '../../services';
 import { News, Recipient } from '../../models';
 import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
+import { distinctUntilChanged, debounceTime, switchMap, tap } from 'rxjs/operators'
 
 @Component({
   selector: 'app-news-upsert',
@@ -14,6 +16,7 @@ export class NewsUpsertComponent implements OnInit {
   news: News;
 
   // ini mesti diganti pake lazyloading ya nanti
+  // recipients: Recipient[];
   recipients: Recipient[] = [
     { id: 1, alias: 'IT Department', type: 'GROUP' },
     { id: 2, alias: 'HR Department', type: 'GROUP' },
@@ -25,7 +28,8 @@ export class NewsUpsertComponent implements OnInit {
   checkStartDateToday: boolean;
   checkEndDateNever: boolean;
 
-  recipientLoading: boolean = false;
+  loadingGetRecipients: boolean = false;
+  recipientsTypeahead: Subject<string> = new Subject<string>();
 
   constructor(
     private router: Router,
@@ -41,8 +45,6 @@ export class NewsUpsertComponent implements OnInit {
     this.news = new News();
 
     if (this.id > 0) {
-      console.log(`Edit Mode`);
-
       this.getNewsById(this.id);
     }
 
@@ -101,11 +103,17 @@ export class NewsUpsertComponent implements OnInit {
     }
   }
 
-  // getRecipients() {
-  //   this.newsService.getRecipients()
-  //     .subscribe(response => {
-  //       this.recipients = response.data.items;
-  //     });
-  // }
-
+  getRecipients() {
+    this.recipientsTypeahead.pipe(
+      tap(() => this.loadingGetRecipients = true),
+      distinctUntilChanged(),
+      debounceTime(200),
+      switchMap(term => this.newsService.getRecipients(term))
+    ).subscribe(response => {
+      this.recipients = response.items;
+      this.loadingGetRecipients = false;
+    }, () => {
+      this.recipients = [];
+    });
+  }
 }

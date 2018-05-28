@@ -22,5 +22,9 @@ export class ProfileService {
 
     return this.http.post<ApiResponseQuery<FieldSupport>>(`${environment.apiUrl}/api/profiles/list/fs?${queryString.join('&')}`, {});
   }
+
+  // countFieldSupports(): number {
+  //   // return this.http.post<Observable<number>>(`${environment.apiUrl}/api/profiles/list/fs/count`, {});
+  // }
 }
 

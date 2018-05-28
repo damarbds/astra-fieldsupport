@@ -46,6 +46,7 @@ import { TrackFsPositionModule } from "./views/track-fs-position/track-fs-positi
 
 import { NewsService, ProfileService } from "./services";
 import { ToastrModule, ToastrService } from "ngx-toastr";
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   imports: [
@@ -67,7 +68,8 @@ import { ToastrModule, ToastrService } from "ngx-toastr";
     SharedModule,
     NewsModule,
     ReportModule,
-    TrackFsPositionModule
+    TrackFsPositionModule,
+    ModalModule.forRoot()
   ],
   declarations: [
     AppComponent,

@@ -26,6 +26,12 @@ export class NewsService {
     queryString.push(`$skip=${(pageQuery.page - 1) * pageQuery.size}`);
     // orderby
     // queryString.push(`$orderby=${pageQuery.orderBy} ${pageQuery.sort}`);
+    queryString.push(`$orderby=StartDate`);
+    // filter - keyword
+    queryString.push(`$filter=substringof('${pageQuery.keyword}', Title) eq true`);
+    // queryString.push(`$search=${pageQuery.keyword}`);
+    // filter - date
+    queryString.push(`$filter=StartDate gt ${startDate} and EndDate gt ${endDate}`);
 
     return this.http.post<ApiResponseQuery<News>>(`${environment.apiUrl}/api/alert/list?${queryString.join('&')}`, {});
   }
@@ -46,9 +52,14 @@ export class NewsService {
     return this.http.post<ApiResponse<News>>(`${environment.apiUrl}/api/alert/${id}/delete`, {});
   }
 
-  getRecipients(keyword: string = null) {
-    // return this.http.post<ApiResponseQuery<Recipient>>(`${environment.apiUrl}/api/recipient/list`, {});
-    let result: ApiResponseQuery<Recipient> = new ApiResponseQuery<Recipient>();
+  getRecipients(keyword: string = null): Observable<ApiResponseQuery<Recipient>> {
+    let queryString: string[] = new Array;
+    queryString.push(`$top=20`);
+    queryString.push(`$filter=substringof('${keyword}', Alias) eq true`);
+    // queryString.push(`$search=${keyword}`);
+
+    return this.http.post<ApiResponseQuery<Recipient>>(`${environment.apiUrl}/api/recipient/list?${queryString.join('&')}`, {});
+    // let result: ApiResponseQuery<Recipient> = new ApiResponseQuery<Recipient>();
     // result.succeed = true;
     // result.message = '';
     // result.data = new QueryResult<Recipient>();
@@ -60,7 +71,7 @@ export class NewsService {
     // result.data.items.push({ alias: 'Pensil', id: 1, type: 'INDIVIDUAL' });
     // result.data.items.push({ alias: 'Rambut', id: 1, type: 'GROUP' });
 
-    return of(result);
+    // return of(result);
   }
 
 }
