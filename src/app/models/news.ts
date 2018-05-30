@@ -9,7 +9,7 @@ export class News {
 }
 
 export class Recipient {
-    type: string;
+    type: 'GROUP' | 'INDIVIDUAL' | string;
     id: number;
     alias: string;
 }

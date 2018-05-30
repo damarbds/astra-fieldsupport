@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild, ElementRef } from '@angular/core';
+import { FieldSupport, PageQuery } from '../../models';
+import { ProfileService } from '../../services';
+import { } from 'googlemaps';
+import { MapsAPILoader, LatLng } from '@agm/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-track-fs-position',
@@ -7,51 +12,139 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TrackFsPositionComponent implements OnInit {
 
-  selectedFieldSupport: any;
+  selectedRoute: any;
+  zoom: number = 5;
   currentLat: number;
   currentLng: number;
 
-  fieldSupports: any = [
-    {
-      id: 1,
-      name: 'Rahmat Hidayat',
-      username: 'rahmathidayat',
-      email: 'rahmat.hidayat@ai.astra.co.id',
-      phone: '081208120812',
+  destinationLat: number;
+  destinationLng: number;
+  avoidTolls: boolean = true;
 
-      lat: -6.121435,
-      lng: 106.774125
-    },
-    {
-      id: 2,
-      name: 'Jimmy Hidayat',
-      username: 'jimmyhidayat',
-      email: 'jimmy.hidayat@ai.astra.co.id',
-      phone: '081802866694',
+  availableRoutes: any[];
 
-      lat: -6.211,
-      lng: 106.8
-    }
-  ];
+  selectedFieldSupport: FieldSupport;
+  fieldSupports: Array<FieldSupport> = new Array<FieldSupport>();
+  filteredFieldSupports: Array<FieldSupport> = [];
+  pageQuery: PageQuery = new PageQuery();
 
-  constructor() { }
+  dir: any;
+
+  // public searchControl: FormControl;
+  @ViewChild("searchDestination")
+  public searchDestinationElementRef: ElementRef;
+
+  constructor(
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone,
+    private profileService: ProfileService
+  ) { }
 
   ngOnInit() {
-    navigator.geolocation.getCurrentPosition(position => {
-      this.currentLat = position.coords.latitude;
-      this.currentLng = position.coords.longitude;
+    // navigator.geolocation.getCurrentPosition(position => {
+    //   this.currentLat = position.coords.latitude;
+    //   this.currentLng = position.coords.longitude;
+    // });
+
+    // center of Indonesia
+    this.currentLat = -2.4151583;
+    this.currentLng = 108.8264017;
+
+    this.getFieldSupports(this.pageQuery);
+
+    this.mapsAPILoader.load().then(() => {
+      let autocomplete = new google.maps.places.Autocomplete(
+        this.searchDestinationElementRef.nativeElement, {
+          types: []
+        });
+
+      autocomplete.setComponentRestrictions({ 'country': ['id'] });
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          //get the place result
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+          //verify result
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+          }
+
+          this.destinationLat = place.geometry.location.lat();
+          this.destinationLng = place.geometry.location.lng();
+        });
+      });
     });
   }
 
-  selectFieldSupport(fieldSupport: any) {
+  getFieldSupports(pageQuery: PageQuery) {
+    this.profileService.getFieldSupports(pageQuery)
+      .subscribe(response => {
+        // nanti buka ini ya
+        // this.fieldSupports = response.items;
+
+        this.fieldSupports = [
+          {
+            id: 1,
+            name: 'Rahmat Hidayat',
+            username: 'rahmathidayat',
+            email: 'rahmat.hidayat@ai.astra.co.id',
+            phone: '081208120812',
+
+            lat: -6.222796,
+            lng: 106.8119382
+          },
+          {
+            id: 2,
+            name: 'Jimmy Hidayat',
+            username: 'jimmyhidayat',
+            email: 'jimmy.hidayat@ai.astra.co.id',
+            phone: '081802866694',
+
+            lat: -6.211,
+            lng: 106.8
+          },
+          {
+            id: 3,
+            name: 'Dhifa Irawan',
+            username: 'dhifairawan',
+            email: 'dhifa@ai.astra.co.id',
+            phone: '081802866694',
+
+            lat: -6.25,
+            lng: 106.7
+          }
+        ];
+      });
+  }
+
+  selectFieldSupport(fieldSupport: FieldSupport) {
     this.selectedFieldSupport = fieldSupport;
+
+    this.zoom = 14;
 
     this.currentLat = fieldSupport.lat;
     this.currentLng = fieldSupport.lng;
   }
 
+  removeSelectedFieldSupport() {
+    delete this.selectedFieldSupport;
+  }
+
   searchFieldSupports(keyword: string) {
-    debugger
+    this.filteredFieldSupports = this.fieldSupports.filter(t => t.name.toLowerCase().indexOf(keyword.toLowerCase()) > -1).splice(0, 5);
+  }
+
+  selectRoute(route: any) {
+    this.selectedRoute = route;
+  }
+
+  removeSelectedRoute() {
+    delete this.selectedRoute;
+  }
+
+  directionChange(e: any) {
+    console.log(e);
+    this.availableRoutes = e.routes;
+    delete this.selectedRoute;
   }
 
 }

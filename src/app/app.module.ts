@@ -44,8 +44,9 @@ import { NewsModule } from './views/news/news.module';
 import { ReportModule } from "./views/report/report.module";
 import { TrackFsPositionModule } from "./views/track-fs-position/track-fs-position.module";
 
-import { NewsService } from "./services/news.service";
-
+import { NewsService, ProfileService } from "./services";
+import { ToastrModule, ToastrService } from "ngx-toastr";
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   imports: [
@@ -62,10 +63,13 @@ import { NewsService } from "./services/news.service";
     TabsModule.forRoot(),
     ChartsModule,
 
+    ToastrModule.forRoot(),
+
     SharedModule,
     NewsModule,
     ReportModule,
-    TrackFsPositionModule
+    TrackFsPositionModule,
+    ModalModule.forRoot()
   ],
   declarations: [
     AppComponent,
@@ -80,7 +84,9 @@ import { NewsService } from "./services/news.service";
       provide: LocationStrategy,
       useClass: HashLocationStrategy
     },
-    NewsService
+    ToastrService,
+    NewsService,
+    ProfileService
   ],
   bootstrap: [AppComponent]
 })

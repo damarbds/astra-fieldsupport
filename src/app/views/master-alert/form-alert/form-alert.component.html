@@ -1,15 +1,15 @@
 <div class="card">
   <div class="card-body col-6">
     <div class="row">
-      <div class="col-2">
+      <div class="col-4">
         <label>Alert Group Name</label>
       </div>
-      <div class="col-10">
+      <div class="col-8">
         <input class="form-control" type="text" placeholder="Test" id="">
       </div>
     </div>
     <div>
-      <button type="button" class="btn btn-square btn-primary">Add New User</button>
+      <button type="button" (click)="openModal(addNewUser)" class="btn btn-square btn-primary">Add New User</button>
     </div>
     
     
@@ -25,23 +25,85 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>
-            <button class="icon-trash btn-danger" (click)="create()">
-              
-            </button>
-          </td>
-          <td>item.name</td>
-          <td>item.userID</td>
-          <td>item.email</td>
-        </tr>
+          <tr *ngFor="let item of user; let i=index">
+            <td>
+                <button class="icon-trash btn-danger" (click)="delete()"></button>
+            </td>
+            <td>{{item.name}}</td>
+            <td>{{item.user_id}}</td>
+            <td>{{item.email}}</td>
+          </tr>
       </tbody>
     </table>
     <div class="card-body">
       <div>
-        <button class="btn btn-success" (click)="back()">save</button>
-        <button class="btn btn-danger" (click)="back()">cancel</button>
+        <button class="btn btn-success" (click)="onCancel()">save</button>&nbsp;
+        <button class="btn btn-danger" (click)="onCancel()">cancel</button>
       </div>
     </div>
     
 </div>
+
+<ng-template #addNewUser>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{titleModal}}</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-4">
+              <label>Look Up By</label>
+            </div>
+            <div class="col-4">
+              <select [(ngModel)]="lookUpChoice" id="select1" name="select1" class="form-control">
+                <option [(ngValue)]="option.byName">Name</option>
+                <option [(ngValue)]="option.byEmail">Email</option>
+                <option [(ngValue)]="option.byUserId">User ID</option>
+              </select>
+            </div>
+            <div class="col-4">
+              <input class="form-control" type="text" placeholder="Search" [(ngModel)]="search">    
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-12">
+                <button (click)="showSearch(lookUpChoice, search)" class="btn btn-primary">Search</button>&nbsp;
+                <button  class="btn btn-default">Clear</button>
+            </div>
+        </div>
+     
+      <div class="row" style="margin-top:8px;">
+        <div class="col-12">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>
+                    <input id="selectAllUsers" type="checkbox" [indeterminate]="allIndeterminate" [(ngModel)]="allChecked" (change)="selectAllAction($event)">
+                    Action
+                  </th>
+                  <th>Name</th>
+                  <th>User ID</th>
+                  <th>Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of allUser">
+                  <td>
+                      <input type="checkbox" name="items" [(ngModel)]="item.action">
+                  </td>
+                  <td>{{item.name}}</td>
+                  <td>{{item.user_id}}</td>
+                  <td>{{item.email}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <button (click)="passUser()" (click)="modalRef.hide()" class="btn btn-success">OK</button>&nbsp;
+            <button (click)="modalRef.hide()" class="btn btn-danger">Cancel</button>
+        </div>
+      </div>
+      
+    </div>
+</ng-template>
