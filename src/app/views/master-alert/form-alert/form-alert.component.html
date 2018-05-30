@@ -1,109 +1,120 @@
-<div class="card">
-  <div class="card-body col-6">
-    <div class="row">
-      <div class="col-4">
-        <label>Alert Group Name</label>
-      </div>
-      <div class="col-8">
-        <input class="form-control" type="text" placeholder="Test" id="">
-      </div>
-    </div>
-    <div>
-      <button type="button" (click)="openModal(addNewUser)" class="btn btn-square btn-primary">Add New User</button>
-    </div>
-    
-    
-  </div>
-
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Action</th>
-          <th>Name</th>
-          <th>UserID</th>
-          <th>Email</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr *ngFor="let item of user; let i=index">
-            <td>
-                <button class="icon-trash btn-danger" (click)="delete()"></button>
-            </td>
-            <td>{{item.name}}</td>
-            <td>{{item.user_id}}</td>
-            <td>{{item.email}}</td>
-          </tr>
-      </tbody>
-    </table>
+<div class="animated fadeIn">
+  <div class="card">
     <div class="card-body">
-      <div>
-        <button class="btn btn-success" (click)="onCancel()">save</button>&nbsp;
-        <button class="btn btn-danger" (click)="onCancel()">cancel</button>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group row">
+            <label class="col-sm-3 col-md-2 col-form-label">
+              Alert Group Name
+            </label>
+            <div class="col-sm-9 col-md-4">
+              <input class="form-control" type="text" name="alertGroupName">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    
-</div>
-
-<ng-template #addNewUser>
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">{{titleModal}}</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
+    <div class="card-footer">
+      <button type="button" (click)="openModal(addNewUser)" class="btn btn btn-primary">Add New User</button>
     </div>
-    <div class="modal-body">
-        <div class="row">
-            <div class="col-4">
-              <label>Look Up By</label>
-            </div>
-            <div class="col-4">
-              <select [(ngModel)]="lookUpChoice" id="select1" name="select1" class="form-control">
-                <option [(ngValue)]="option.byName">Name</option>
-                <option [(ngValue)]="option.byEmail">Email</option>
-                <option [(ngValue)]="option.byUserId">User ID</option>
-              </select>
-            </div>
-            <div class="col-4">
-              <input class="form-control" type="text" placeholder="Search" [(ngModel)]="search">    
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-12">
-                <button (click)="showSearch(lookUpChoice, search)" class="btn btn-primary">Search</button>&nbsp;
-                <button  class="btn btn-default">Clear</button>
-            </div>
-        </div>
-     
-      <div class="row" style="margin-top:8px;">
-        <div class="col-12">
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th>
-                    <input id="selectAllUsers" type="checkbox" [indeterminate]="allIndeterminate" [(ngModel)]="allChecked" (change)="selectAllAction($event)">
-                    Action
-                  </th>
-                  <th>Name</th>
-                  <th>User ID</th>
-                  <th>Email</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of allUser">
+  </div>
+  
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-12">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Action</th>
+                <th>Name</th>
+                <th>UserID</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of returnDataGetUser; let i=index">
                   <td>
-                      <input type="checkbox" name="items" [(ngModel)]="item.action">
+                      <button class="icon-trash btn-danger" (click)="delete()"></button>
                   </td>
                   <td>{{item.name}}</td>
                   <td>{{item.user_id}}</td>
                   <td>{{item.email}}</td>
                 </tr>
-              </tbody>
-            </table>
-            <button (click)="passUser()" (click)="modalRef.hide()" class="btn btn-success">OK</button>&nbsp;
-            <button (click)="modalRef.hide()" class="btn btn-danger">Cancel</button>
+            </tbody>
+          </table>
+          <pagination [totalItems]="count" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" (pageChanged)="pageChangedGetUser($event)"></pagination>
+        </div>
+        <div class="col-sm-12">
+          <button (click)="submitAlertGroup()" class="btn btn-success">Save</button>&nbsp;
+          <button (click)="cancelAlertGroup()" class="btn btn-danger">Cancel</button>
         </div>
       </div>
-      
     </div>
+  </div>
+</div>
+
+<ng-template #addNewUser>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{titleModal}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <div class="row">
+          <div class="col-4">
+            <label>Look Up By</label>
+          </div>
+          <div class="col-4">
+            <select [(ngModel)]="lookUpChoice" id="select1" name="select1" class="form-control">
+              <option [(ngValue)]="option.byName">Name</option>
+              <option [(ngValue)]="option.byEmail">Email</option>
+              <option [(ngValue)]="option.byUserId">User ID</option>
+            </select>
+          </div>
+          <div class="col-4">
+            <input class="form-control" type="text" placeholder="Search" [(ngModel)]="search">    
+          </div>
+      </div>
+      
+      <div class="row">
+          <div class="col-12">
+              <button (click)="showSearch(lookUpChoice, search)" class="btn btn-primary">Search</button>&nbsp;
+              <button  class="btn btn-default" (click)="clearSearch()">Clear</button>
+          </div>
+      </div>
+   
+    <div class="row" style="margin-top:8px;">
+      <div class="col-12">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>
+                  <input id="selectAllUsers" type="checkbox" [indeterminate]="allIndeterminate" [(ngModel)]="allChecked" (change)="selectAllAction($event)">
+                  Action
+                </th>
+                <th>Name</th>
+                <th>User ID</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of returnDataAllUser; let i = index">
+                <td>
+                    <input type="checkbox" [(ngModel)]="item.action" (change) = "checkboxChange(item)">
+                </td>
+                <td>{{item.name}}</td>
+                <td>{{item.user_id}}</td>
+                <td>{{item.email}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <pagination [totalItems]="count" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" (pageChanged)="pageChanged($event)"></pagination>
+          <button (click)="passUser()" (click)="modalRef.hide()" class="btn btn-success">OK</button>&nbsp;
+          <button (click)="modalRef.hide()" class="btn btn-danger">Cancel</button>
+      </div>
+    </div>
+    
+  </div>
 </ng-template>

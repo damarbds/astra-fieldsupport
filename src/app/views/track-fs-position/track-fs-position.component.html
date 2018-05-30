@@ -1,22 +1,48 @@
 <div style="position: relative;">
   <agm-map [latitude]="currentLat" [longitude]="currentLng" [zoom]="zoom">
+
     <agm-marker-cluster [imagePath]="'https://googlemaps.github.io/js-marker-clusterer/images/m'">
       <agm-marker *ngFor="let fs of fieldSupports" [latitude]="fs.lat" [longitude]="fs.lng" [iconUrl]="'assets/img/icon-bike.png'"
         (markerClick)="selectFieldSupport(fs)">
+        <agm-info-window>
+          <b>{{ fs.name }}</b>
+          <br/> {{ fs.username }}
+          <br/> {{ fs.email }}
+          <br/> {{ fs.phone }}
+        </agm-info-window>
       </agm-marker>
     </agm-marker-cluster>
 
-    <agm-direction *ngIf="selectedFieldSupport" [origin]="{ lat:  selectedFieldSupport.lat, lng: selectedFieldSupport.lng }"
-      [destination]="{ lat: destinationLat, lng: destinationLng }" [avoidTolls]="avoidTolls" [provideRouteAlternatives]="true"
-      (visible)="false" (onChange)="directionChange($event)">
+    <agm-direction *ngIf="selectedFieldSupport && destination"
+      [origin]="{ lat:  selectedFieldSupport.lat, lng: selectedFieldSupport.lng }"
+      [destination]="{ lat: destination.lat, lng: destination.lng }"
+      [avoidTolls]="avoidTolls"
+      [provideRouteAlternatives]="true"
+      (onChange)="directionChange($event)">
     </agm-direction>
+    
+    <div *ngIf="availableRoutes">
+      <agm-polyline *ngFor="let route of availableRoutes"
+        [geodesic]="true"
+        [strokeOpacity]="selectedRoute == route ? 0.9 : 0.2"
+        [strokeColor]="selectedRoute == route ? '#004996': '#000'"
+        [strokeWeight]="5">
+        <agm-polyline-point *ngFor="let point of route.overview_path"
+          [latitude]="point.lat()"
+          [longitude]="point.lng()">
+        </agm-polyline-point>
+      </agm-polyline>
+    </div>
   </agm-map>
 
   <div class="card floating-box" *ngIf="!selectedFieldSupport">
     <div class="card-header">
       <form>
-        <input type="text" name="keyword" #keyword class="form-control" placeholder="Search Field Support" autocomplete="off" (keyup)="searchFieldSupports(keyword.value)"
-        />
+        <input type="text" class="form-control"
+          name="keyword"
+          #keyword placeholder="Search Field Support"
+          autocomplete="off"
+          (keyup)="searchFieldSupports(keyword.value)" />
       </form>
     </div>
     <div class="card-body p-0">
@@ -80,6 +106,11 @@
               <br/>
               <small>{{ route.legs[0].duration.text }}</small>
             </div>
+
+            <div class="col-12" *ngIf="selectedRoute == route">
+              <br/>
+              <a href="javascript:;" class="font-weight-bold" (click)="openDetailSelectedRoute = true">DETAILS</a>
+            </div>
           </div>
         </div>
       </div>
@@ -87,15 +118,15 @@
 
   </div>
 
-  <div class="card floating-box" *ngIf="selectedRoute">
+  <div class="card floating-box" *ngIf="selectedRoute && openDetailSelectedRoute">
     <div class="card-header">
       <div class="row">
         <div class="col-1">
-          <a href="javascript:;" (click)="removeSelectedRoute()">
+          <a href="javascript:;" (click)="openDetailSelectedRoute = false">
             <i class="fa fa-chevron-left"></i>
           </a>
         </div>
-        <div class="col">
+        <div class="col overflow-ellipsis">
           <h6 class="m-0">{{ selectedRoute.legs[0].duration.text }}
             <small>({{ selectedRoute.legs[0].distance.text }})</small>
           </h6>

@@ -4,6 +4,7 @@ import * as moment from "moment";
 import * as _ from "lodash";
 import { ReportService } from "../../services/report.service";
 import { ApiResponseQuery, TicketStatusReport, PageQuery } from "../../models";
+import { environment } from "../../../environments/environment";
 
 @Component({
   selector: "app-report",
@@ -33,6 +34,8 @@ export class ReportComponent implements OnInit {
   allIndeterminate: boolean = false;
   selectedIds: Array<number> = [];
   unselectedIds: Array<number> = [];
+
+  url: string = `${environment.apiUrl}`;
 
   constructor(private reportService: ReportService) {}
 
@@ -144,10 +147,6 @@ export class ReportComponent implements OnInit {
       this.manageSelectedIds(this.selectedIds, e, id);
       this.manageCheckboxBySelected(this.selectedIds, this.pageQuery.count);
     }
-  }
-
-  downloadExcel() {
-    console.log(this.isAll, this.selectedIds, this.unselectedIds);
   }
 
   flushPreviousReport() {

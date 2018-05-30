@@ -1,4 +1,33 @@
+@font-face {
+    font-family: 'Helvetica Neue';
+    src: url('../assets/fonts/HelveticaNeueLTStd-Lt.otf');
+}
+
+@font-face {
+    font-family: 'Helvetica Neue';
+    src: url('../assets/fonts/HelveticaNeueLTStd-Bd.otf');
+    font-weight: bold;
+}
+
+body {
+    font-family: 'Helvetica Neue', sans-serif;
+}
+
 // Here you can add other styles
+.app-header {
+    .navbar-brand {
+        width: 200px;
+        padding: 1rem;
+
+        .navbar-brand-full {
+            width: 100%;
+        }
+    }
+
+    .navbar-toggler {
+        display: none;
+    }
+}
 .sidebar {
     background-color: #004996;
 
@@ -13,5 +42,14 @@
         .nav-icon {
             color: #fff;
         }
+    }
+}
+
+.overflow-ellipsis {
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    > * {
+        white-space: nowrap;
     }
 }
