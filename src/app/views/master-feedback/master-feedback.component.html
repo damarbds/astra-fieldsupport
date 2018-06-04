@@ -1,59 +1,64 @@
-<div class="card">
-  <div class="card-body">
-    <div class="col-6">
-      <div class="form-group row">
-        <div class="col-2">
-          <label>Aplication</label>
-        </div>
-        <div class="col-10">
-          <select class="form-control" name="" id="" style="width: 100%">
-            <!-- <option value="" selected>Data 1</option> -->
-            <option *ngFor="let apl of aplication" value="">{{apl.name}}</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group row">
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-body">
+      <div class="col-6">
+        <div class="form-group row">
           <div class="col-2">
-              <label>Name</label>
-            </div>
-            <div class="col-10">
-              <input class="form-control" type="text" placeholder="Test" id="">
-            </div>
-      </div>
-      <div class="form-group row" style="margin-left: 1px;margin-top: 8px;margin-bottom: 5px;">
-        <button class="btn btn-square btn-sm btn-primary" style="margin-right: 3px">search</button>
-        <button class="btn btn-square btn-sm btn-primary" (click)="create()">clear</button>
-      </div>
-      <div class="form-group row" style="margin-left: 1px;margin-top: 8px;margin-bottom: 5px">
-        <button class="btn btn-square btn-sm btn-primary" (click)="create()">Add New Data</button>
+            <label>Aplication</label>
+          </div>
+          <div class="col-10">
+            <select class="form-control" name="" id="" style="width: 100%">
+              <!-- <option value="" selected>Data 1</option> -->
+              <option *ngFor="let apl of aplication" value="">{{apl.name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-2">
+            <label>Name</label>
+          </div>
+          <div class="col-10">
+            <input class="form-control" type="text" id="">
+          </div>
+        </div>
       </div>
     </div>
+    <div class="card-footer">
+      <button class="btn btn-primary" type="submit">
+        Search</button>
+      <button class="btn btn-default" type="reset">
+        Clear</button>
+    </div>
   </div>
-</div>
 
-<div class="card">
-  <div class="card-body">
-    <table class="table">
-      <thead>
-        <tr>
-          <th style="max-width: 50px;">Action</th>
-          <th>Application</th>
-          <th>Name</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of data">
-          <td style="max-width: 50px;">
-            <button class="icon-magnifier btn-success" (click)="detail(item.id)"></button>
-            <button class="icon-note btn-primary" (click)="edit(item.id)"></button>
-            <button class="icon-trash btn-danger" (click)="delete()"></button>
-          </td>
-          <td>{{item.applicationName}}</td>
-          <td>{{item.feedbackName}}</td>
-          <td>{{item.description}}</td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="card">
+    <div class="card-header">
+      <button class="btn btn-primary" type="submit" (click)="create()">
+        Add New Data</button>
+    </div>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th style="max-width: 50px;">Action</th>
+            <th>Application</th>
+            <th>Name</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of data">
+            <td style="max-width: 50px;">
+              <button class="icon-magnifier btn-success" (click)="detail(item.id)"></button>
+              <button class="icon-note btn-primary" (click)="edit(item.id)"></button>
+              <button class="icon-trash btn-danger" (click)="delete()"></button>
+            </td>
+            <td>{{item.applicationName}}</td>
+            <td>{{item.feedbackName}}</td>
+            <td>{{item.description}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

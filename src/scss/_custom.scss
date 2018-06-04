@@ -44,3 +44,13 @@ body {
         }
     }
 }
+
+.card-footer {
+    > :not(:last-child) {
+        margin-right: .25rem;
+    }
+
+    > :not(:first-child) {
+        margin-left: .25rem;
+    }
+}
