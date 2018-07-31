@@ -26,6 +26,10 @@ export class MasterFeedbackComponent implements OnInit {
     })
   }
 
+  clear(){
+    window.alert("data cleared")
+  }
+
   create(){
     this.router.navigate(['data-master/create'])
   }

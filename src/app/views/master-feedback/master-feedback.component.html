@@ -20,12 +20,12 @@
               <input class="form-control" type="text" placeholder="Test" id="">
             </div>
       </div>
-      <div class="form-group row" style="margin-left: 1px;margin-top: 8px;margin-bottom: 5px;">
-        <button class="btn btn-square btn-sm btn-primary" style="margin-right: 3px">search</button>
-        <button class="btn btn-square btn-sm btn-primary" (click)="create()">clear</button>
+      <div class="form-group row">
+        <button class="btn btn-sm btn-primary" type="submit">search</button>
+        <button class="btn btn-sm btn-danger" type="reset" (click)="clear()">clear</button>
       </div>
-      <div class="form-group row" style="margin-left: 1px;margin-top: 8px;margin-bottom: 5px">
-        <button class="btn btn-square btn-sm btn-primary" (click)="create()">Add New Data</button>
+      <div class="form-group row">
+        <button class="btn btn-sm btn-primary" type="submit" (click)="create()">Add New Data</button>
       </div>
     </div>
   </div>
