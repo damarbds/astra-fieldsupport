@@ -45,11 +45,12 @@ body {
     }
 }
 
-.overflow-ellipsis {
-    text-overflow: ellipsis;
-    overflow: hidden;
+.card-footer {
+    > :not(:last-child) {
+        margin-right: .25rem;
+    }
 
-    > * {
-        white-space: nowrap;
+    > :not(:first-child) {
+        margin-left: .25rem;
     }
 }

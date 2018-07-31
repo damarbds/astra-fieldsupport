@@ -8,18 +8,18 @@
               Group Name
             </label>
             <div class="col-sm-9 col-md-4">
-              <input type="text" class="form-control" [(ngModel)]="search"/>
+              <input type="text" class="form-control" [(ngModel)]="search" />
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="card-footer">
-      <button class="btn btn-sm btn-primary" (click)="findData(search)"><i class="fa fa-dot-circle-o"></i> Search</button>&nbsp;
-      <button class="btn btn-sm btn-danger" (click)="clearSearch()"><i class="fa fa-ban"></i> Clear</button>
+      <button class="btn btn-primary" (click)="findData(search)">Search</button>
+      <button class="btn btn-danger" (click)="clearSearch()">Clear</button>
     </div>
   </div>
-  
+
   <div class="card">
     <div class="card-header">
       <button class="btn btn-primary pull-left" (click)="create()">
@@ -29,30 +29,38 @@
     <div class="card-body">
       <div class="row">
         <div class="col-sm-12">
-          <table class="table table-bordered">
+          <table class="table table-bordered table-hover">
             <thead>
               <tr>
-                <th style="max-width: 50px;">Action</th>
-                <th>Alert Group Name</th>
-                <th>Count of User</th>
+                <th style="width: 150px;" class="text-center">Action</th>
+                <th class="text-center">Alert Group Name</th>
+                <th class="text-center">Count of User</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let item of returnData">
-                <td style="max-width: 50px;">
-                  <button class="icon-doc btn-success" (click)="create()"></button>
-                  <button class="icon-puzzle btn-primary" (click)="create()"></button>
-                  <button class="icon-location-pin btn-danger" (click)="delete()"></button>
+                <td class="text-center">
+                  <a href="javascript:;" class="btn btn-link" (click)="create()">
+                    <i class="fa fa-pencil"></i>
+                  </a>
+                  <a href="javascript:;" class="btn btn-link" (click)="create()">
+                    <i class="fa fa-info"></i>
+                  </a>
+                  <a href="javascript:;" class="btn btn-link" (click)="delete()">
+                    <i class="fa fa-trash"></i>
+                  </a>
                 </td>
-                <td>{{item.alert}}</td>
-                <td>{{item.count}}</td>
+                <td class="text-center">{{item.alert}}</td>
+                <td class="text-center">{{item.count}}</td>
               </tr>
             </tbody>
           </table>
-          
-          <pagination [totalItems]="count" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" (pageChanged)="pageChanged($event)"></pagination>
         </div>
       </div>
+    </div>
+    <div class="card-footer">
+      <pagination class="pull-right" [totalItems]="count" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" (pageChanged)="pageChanged($event)"></pagination>
+
     </div>
   </div>
 </div>

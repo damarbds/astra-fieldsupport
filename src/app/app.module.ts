@@ -44,7 +44,9 @@ import { NewsModule } from './views/news/news.module';
 import { ReportModule } from "./views/report/report.module";
 import { TrackFsPositionModule } from "./views/track-fs-position/track-fs-position.module";
 
-import { NewsService, ProfileService } from "./services";
+import { NewsService
+  , ProfileService
+  , MasterFeedbackService } from "./services";
 import { ToastrModule, ToastrService } from "ngx-toastr";
 import { ModalModule } from 'ngx-bootstrap/modal';
 
@@ -86,7 +88,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     },
     ToastrService,
     NewsService,
-    ProfileService
+    ProfileService,
+    MasterFeedbackService
   ],
   bootstrap: [AppComponent]
 })

@@ -24,8 +24,8 @@
     <div *ngIf="availableRoutes">
       <agm-polyline *ngFor="let route of availableRoutes"
         [geodesic]="true"
-        [strokeOpacity]="selectedRoute == route ? 0.9 : 0.2"
-        [strokeColor]="selectedRoute == route ? '#004996': '#000'"
+        [strokeOpacity]="selectedRoute == route ? 0.9 : 0.3"
+        [strokeColor]="selectedRoute == route ? '#004996': '#222'"
         [strokeWeight]="5">
         <agm-polyline-point *ngFor="let point of route.overview_path"
           [latitude]="point.lat()"
@@ -126,7 +126,7 @@
             <i class="fa fa-chevron-left"></i>
           </a>
         </div>
-        <div class="col overflow-ellipsis">
+        <div class="col text-truncate">
           <h6 class="m-0">{{ selectedRoute.legs[0].duration.text }}
             <small>({{ selectedRoute.legs[0].distance.text }})</small>
           </h6>

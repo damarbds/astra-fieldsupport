@@ -13,7 +13,13 @@
       <div class="form-group row">
         <label class="col-md-2 col-form-label">Periode</label>
         <div class="col-md-4">
-          <input type="text" placeholder="Awal - Akhir" class="form-control" [(ngModel)]="period" bsDaterangepicker>
+          <input type="text"
+            class="form-control"
+            placeholder="Start - End"
+            [(ngModel)]="period"
+            autocomplete="off"
+            bsDaterangepicker
+            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-blue' }" />
           <span style="color:#dd4b39" *ngIf="periodHasError">Periode Report harus diisi</span>
         </div>
       </div>
@@ -24,14 +30,14 @@
   </div>
   <div *ngIf="show.ticketStatus" class="animated fadeIn card">
     <div class="card-header">
-      <h3>
+      <strong>
         Ticket Status Report
-      </h3>
+      </strong>
     </div>
     <div class="card-body">
       <div class="row">
         <div class="col-sm-12">
-          <table class="table table-bordered" style="table-layout: fixed">
+          <table class="table table-bordered table-hover" style="table-layout: fixed">
             <thead>
               <tr>
                 <th style="width: 6%">
@@ -119,14 +125,14 @@
   </div>
   <div *ngIf="show.userFeedback" class="animated fadeIn card">
     <div class="card-header">
-      <h3>
+      <strong>
         User Feedback Report
-      </h3>
+      </strong>
     </div>
     <div class="card-body">
       <div class="row">
         <div class="col-sm-12">
-          <table class="table table-bordered">
+          <table class="table table-bordered table-hover">
             <thead>
               <tr>
                 <th>
@@ -187,13 +193,11 @@
               </tr>
             </tbody>
           </table>
-          <pagination class="report-pagination pull-right" [totalItems]="pageQuery.count" [itemsPerPage]="pageQuery.size" [maxSize]="maxSize"
-            (pageChanged)="pageChanged($event)"></pagination>
         </div>
       </div>
     </div>
     <div class="card-footer">
-      <form ngNoForm action="{{ url }}/api/report/feedback-user/print" method="POST">
+      <form class="pull-left" ngNoForm action="{{ url }}/api/report/feedback-user/print" method="POST">
         <div *ngIf="!isAll" hidden>
           <div *ngFor="let selectedId of selectedIds; let i = index;">
             <input type="text" name="ids[{{ i }}]" value="{{ selectedId }}">
@@ -208,6 +212,15 @@
         </div>
         <input class="btn btn-success" type="submit" value="Download as Excel">
       </form>
+
+      <pagination class="report-pagination pull-right"
+        [maxSize]="8"
+        [boundaryLinks]="true"
+        [totalItems]="pageQuery.count"
+        [itemsPerPage]="pageQuery.size"
+        [maxSize]="maxSize"
+        (pageChanged)="pageChanged($event)">
+      </pagination>
     </div>
   </div>
 </div>

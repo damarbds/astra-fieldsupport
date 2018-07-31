@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MasterFeedbackService } from '../../../services/master-service/master-feedback.service';
+import { MasterFeedbackService } from '../../../services';
 
 @Component({
   selector: 'app-master-form',

@@ -30,7 +30,7 @@ export class NewsListComponent implements OnInit {
     let startDate: Date;
     let endDate: Date;
 
-    if (this.selectedDateRange.length > 0) {
+    if (this.selectedDateRange && this.selectedDateRange.length > 0) {
       startDate = this.selectedDateRange[0];
       endDate = this.selectedDateRange[1];
     }
